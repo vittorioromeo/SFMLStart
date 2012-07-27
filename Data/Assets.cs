@@ -202,6 +202,9 @@ namespace SFMLStart.Data
             else Utils.Log(string.Format("tileset <<{0}>> does not exist", tilesetName), "InitializeAnimations", ConsoleColor.Yellow);
         }
 
-        public static Texture GetTexture(string mTextureName) { return _textures.ContainsKey(mTextureName) ? _textures[mTextureName] : _textures["missingimage"]; }
+        public static Texture GetTexture(string mTextureName)
+        {
+            return _textures.ContainsKey(mTextureName) ? _textures[mTextureName] : _textures["missingimage"];
+        }
     }
 }
