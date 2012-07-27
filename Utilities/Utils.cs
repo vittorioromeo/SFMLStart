@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using SFML.Window;
+using SFMLStart.Data;
+using SFMLStart.Utilities.Timelines;
 
 #endregion
 
@@ -17,6 +19,8 @@ namespace SFMLStart.Utilities
 
         public static void Log(string mString, string mTitle = null, ConsoleColor mColor = ConsoleColor.Cyan)
         {
+            if(!Settings.Logging.IsEnabled) return;
+
             Console.ForegroundColor = mColor;
 
             if (mTitle != null)
@@ -30,9 +34,9 @@ namespace SFMLStart.Utilities
             Console.WriteLine(mString);
         }
 
-        public static void Wait(this Timeline mTimeline, int mTime = 0) { mTimeline.AddCommand(new SSTCWait(mTime)); }
-        public static void Action(this Timeline mTimeline, Action mAction) { mTimeline.AddCommand(new SSTCAction(mAction)); }
-        public static void Goto(this Timeline mTimeline, int mIndex = 0, int mTimes = -1) { mTimeline.AddCommand(new SSTCGoto(mIndex, mTimes)); }
+        public static void Wait(this Timeline mTimeline, int mTime = 0) { mTimeline.AddCommand(new Wait(mTime)); }
+        public static void Action(this Timeline mTimeline, Action mAction) { mTimeline.AddCommand(new Do(mAction)); }
+        public static void Goto(this Timeline mTimeline, int mIndex = 0, int mTimes = -1) { mTimeline.AddCommand(new Goto(mIndex, mTimes)); }
 
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> mSource, Action<T> mAction)
         {

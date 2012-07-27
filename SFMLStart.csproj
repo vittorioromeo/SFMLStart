@@ -58,6 +58,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Bind.cs" />
+    <Compile Include="Data\Input.cs" />
+    <Compile Include="Data\KeyCombination.cs" />
+    <Compile Include="Utilities\Animations\Step.cs" />
     <Compile Include="Utilities\BinaryTree.cs" />
     <Compile Include="Utilities\PerformanceStopwatch.cs" />
     <Compile Include="Utilities\INIParser.cs" />
@@ -66,12 +70,18 @@
     <Compile Include="Data\Assets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Settings.cs" />
+    <Compile Include="Utilities\Timelines\Do.cs" />
+    <Compile Include="Utilities\Timelines\Goto.cs" />
+    <Compile Include="Utilities\Timelines\GotoConditional.cs" />
+    <Compile Include="Utilities\Timelines\Wait.cs" />
     <Compile Include="Utilities\Timeline.cs" />
     <Compile Include="GameWindow.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Utilities\Tileset.cs" />
+    <Compile Include="Utilities\Timelines\Command.cs" />
     <Compile Include="Utilities\Utils.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

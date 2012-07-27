@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using SFML.Graphics;
+using SFMLStart.Utilities.Animations;
 
 #endregion
 
@@ -19,11 +20,11 @@ namespace SFMLStart.Utilities
             Tileset = mTileset;
             IsLooped = mIsLooped;
             IsPingPong = mIsPingPong;
-            Steps = new List<AnimationStep>();
+            Steps = new List<Step>();
         }
 
-        public List<AnimationStep> Steps { get; set; }
-        public AnimationStep CurrentStep { get; set; }
+        public List<Step> Steps { get; set; }
+        public Step CurrentStep { get; set; }
         public int CurrentFrame { get; set; }
         public Tileset Tileset { get; set; }
         public bool IsLooped { get; set; }
@@ -39,13 +40,13 @@ namespace SFMLStart.Utilities
 
         public void AddStep(int mTileX, int mTileY, int mFrames)
         {
-            Steps.Add(new AnimationStep(mTileX, mTileY, mFrames));
+            Steps.Add(new Step(mTileX, mTileY, mFrames));
             if (CurrentStep == null) CurrentStep = Steps[0];
         }
 
         public void AddStep(string mTilesetLabel, int mFrames)
         {
-            Steps.Add(new AnimationStep(Tileset.Labels[mTilesetLabel].X, Tileset.Labels[mTilesetLabel].Y, mFrames));
+            Steps.Add(new Step(Tileset.Labels[mTilesetLabel].X, Tileset.Labels[mTilesetLabel].Y, mFrames));
             if (CurrentStep == null) CurrentStep = Steps[0];
         }
 
@@ -116,19 +117,5 @@ namespace SFMLStart.Utilities
         }
 
         public IntRect GetCurrentSubRect() { return CurrentStep != null ? Tileset.GetTextureRect(CurrentStep.X, CurrentStep.Y) : new IntRect(0, 0, 0, 0); }
-    }
-
-    public class AnimationStep
-    {
-        public AnimationStep(int mX, int mY, int mFrames)
-        {
-            X = mX;
-            Y = mY;
-            Frames = mFrames;
-        }
-
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Frames { get; set; }
     }
 }

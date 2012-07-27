@@ -17,29 +17,29 @@ namespace SFMLStart
         public Action OnDrawAfterCamera { get; set; }
         public Action OnDrawAfterDefault { get; set; }
 
-        public void DefineInput(string mInputName, int mInputDelay, Action mActionTrue, Action mActionFalse, InputCombination mInputCombination) { Assets.DefineInput(this, mInputName, mInputDelay, mActionTrue, mActionFalse, mInputCombination); }
+        public void Bind(string mBindName, int mBindDelay, Action mActionTrue, Action mActionFalse, KeyCombination mKeyCombination) { Input.Bind(this, mBindName, mBindDelay, mActionTrue, mActionFalse, mKeyCombination); }
 
         public void Update(float mFrameTime)
         {
             // Multiple input combinations should override single input combinations
-            Assets.Inputs.Sort((b, a) => (a.Combination.Inputs.Count.CompareTo(b.Combination.Inputs.Count)));
+            Input.Binds.Sort((b, a) => (a.KeyCombination.Inputs.Count.CompareTo(b.KeyCombination.Inputs.Count)));
 
-            foreach (var dataInput in Assets.Inputs.Where(x => x.Game == this))
+            foreach (var dataInput in Input.Binds.Where(x => x.Game == this))
             {
                 if (dataInput.CurrentDelay > 0) dataInput.CurrentDelay -= mFrameTime;
 
                 if (GlobalInputDelay <= 0 && dataInput.CurrentDelay <= 0 &&
-                    GameWindow.IsInputCombinationDown(dataInput.Combination))
+                    GameWindow.IsInputCombinationDown(dataInput.KeyCombination))
                 {
                     dataInput.ActionTrue.Invoke();
                     dataInput.CurrentDelay = dataInput.MaxDelay;
                     GlobalInputDelay = dataInput.GlobalDelay;
 
-                    foreach (var input in Assets.Inputs.Where(x => dataInput.Combination.Inputs.Any(x.Combination.Inputs.Contains)))
+                    foreach (var input in Input.Binds.Where(x => dataInput.KeyCombination.Inputs.Any(x.KeyCombination.Inputs.Contains)))
                         input.CurrentDelay = dataInput.MaxDelay;
                 }
                 else if (dataInput.ActionFalse != null) dataInput.ActionFalse.Invoke();
-                else if (!GameWindow.IsInputCombinationDown(dataInput.Combination)) dataInput.CurrentDelay = 0;
+                else if (!GameWindow.IsInputCombinationDown(dataInput.KeyCombination)) dataInput.CurrentDelay = 0;
             }
             if (GlobalInputDelay > 0) GlobalInputDelay -= mFrameTime;
 

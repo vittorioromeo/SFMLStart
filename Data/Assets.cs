@@ -18,7 +18,6 @@ namespace SFMLStart.Data
 
         static Assets() { Initialize(); }
 
-        public static List<Input> Inputs { get; private set; }
         public static Dictionary<string, Tileset> Tilesets { get; private set; }
         public static Dictionary<string, Animation> Animations { get; private set; }
         public static Dictionary<string, Sound> Sounds { get; private set; }
@@ -28,7 +27,6 @@ namespace SFMLStart.Data
 
         private static void Initialize()
         {
-            Inputs = new List<Input>();
             _images = new Dictionary<string, Image>();
             _textures = new Dictionary<string, Texture>();
             Tilesets = new Dictionary<string, Tileset>();
@@ -205,51 +203,5 @@ namespace SFMLStart.Data
         }
 
         public static Texture GetTexture(string mTextureName) { return _textures.ContainsKey(mTextureName) ? _textures[mTextureName] : _textures["missingimage"]; }
-
-        public static void DefineInput(Game mGame, string mInputName, int mInputDelay, Action mActionTrue, Action mActionFalse, params InputCombination[] mInputs)
-        {
-            foreach (var obj in mInputs)
-            {
-                Inputs.Add(new Input(mGame, mInputName, mInputDelay, obj, mActionTrue,
-                                     mActionFalse));
-
-                Utils.Log(string.Format("<<{0}>> defined", mInputName), "DefineInput", ConsoleColor.Red);
-            }
-        }
-    }
-
-    public class Input
-    {
-        public Input(Game mGame, string mName, float mDelay, InputCombination mCombination, Action mActionTrue,
-                     Action mActionFalse, float mGlobalDelay = 0)
-        {
-            Game = mGame;
-            Name = mName;
-            Combination = mCombination;
-            MaxDelay = mDelay;
-            ActionTrue = mActionTrue;
-            ActionFalse = mActionFalse;
-            GlobalDelay = mGlobalDelay;
-        }
-
-        public Game Game { get; set; }
-        public string Name { get; set; }
-        public InputCombination Combination { get; set; }
-        public float GlobalDelay { get; set; }
-        public float MaxDelay { get; set; }
-        public float CurrentDelay { get; set; }
-        public Action ActionTrue { get; set; }
-        public Action ActionFalse { get; set; }
-    }
-
-    public class InputCombination
-    {
-        public InputCombination(params object[] mInputs)
-        {
-            Inputs = new List<string>();
-            foreach (var obj in mInputs) Inputs.Add(obj.GetType() + obj.ToString());
-        }
-
-        public List<string> Inputs { get; private set; }
     }
 }
