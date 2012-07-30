@@ -19,7 +19,7 @@ namespace SFMLStart.Utilities
 
         public static void Log(string mString, string mTitle = null, ConsoleColor mColor = ConsoleColor.Cyan)
         {
-            if(!Settings.Logging.IsEnabled) return;
+            if (!Settings.Logging.IsEnabled) return;
 
             Console.ForegroundColor = mColor;
 

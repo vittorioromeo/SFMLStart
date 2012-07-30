@@ -31,7 +31,7 @@ namespace SFMLStart.Utilities
         /// </summary>
         /// <param name="left"> </param>
         /// <param name="right"> </param>
-        /// <returns> &lt;0 for left smaller than right, &gt;0 if they are equal, +1 if right is larger than left </returns>
+        /// <returns> &lt; 0 for left smaller than right, &gt; 0 if they are equal, +1 if right is larger than left </returns>
         public static int CompareFunctionInt(int left, int right) { return left - right; }
 
         /// <summary>

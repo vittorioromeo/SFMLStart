@@ -82,9 +82,6 @@ namespace SFMLStart
             for (var i = 0; i < _mouseButtons.GetLength(0); i++) if (Mouse.IsButtonPressed(_mouseButtons[i])) _inputs.Add(_mouseButtons[i].GetType() + _mouseButtons[i].ToString());
         }
 
-        internal bool IsInputCombinationDown(KeyCombination mInput)
-        {
-            return mInput.Inputs.All(input => _inputs.Contains(input));
-        }
+        internal bool IsInputCombinationDown(KeyCombination mInput) { return mInput.Inputs.All(input => _inputs.Contains(input)); }
     }
 }

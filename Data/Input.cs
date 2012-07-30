@@ -6,9 +6,8 @@ namespace SFMLStart.Data
 {
     public static class Input
     {
+        static Input() { Binds = new List<Bind>(); }
         public static List<Bind> Binds { get; private set; }
-
-        static Input()  {  Binds = new List<Bind>();}
 
         public static void Bind(Game mGame, string mBindName, int mBindDelay, Action mActionTrue, Action mActionFalse, params KeyCombination[] mInputs)
         {

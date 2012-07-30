@@ -3,9 +3,9 @@ using System;
 namespace SFMLStart.Data
 {
     public class Bind
-    {     
+    {
         public Bind(Game mGame, string mName, float mDelay, KeyCombination mCombination, Action mActionTrue,
-                     Action mActionFalse, float mGlobalDelay = 0)
+                    Action mActionFalse, float mGlobalDelay = 0)
         {
             Game = mGame;
             Name = mName;

@@ -8,13 +8,6 @@ namespace SFMLStart.Data
 {
     public static class Settings
     {
-        #region Nested type: Logging
-        public static class Logging
-        {
-            public static bool IsEnabled = true;
-        }
-        #endregion
-
         #region Nested type: Assets
         public static class Assets
         {
@@ -48,6 +41,13 @@ namespace SFMLStart.Data
         {
             public static int StaticValue = 1;
             public static bool IsStatic = false;
+        }
+        #endregion
+
+        #region Nested type: Logging
+        public static class Logging
+        {
+            public static bool IsEnabled = true;
         }
         #endregion
 
