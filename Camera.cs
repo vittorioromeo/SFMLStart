@@ -11,12 +11,12 @@ namespace SFMLStart
     {
         private readonly RenderWindow _renderWindow;
 
-        public Camera(GameWindow mGameWindow)
+        public Camera(GameWindow mGameWindow, int mWidth, int mHeight)
         {
             Debug.Assert(mGameWindow != null);
 
             _renderWindow = mGameWindow.RenderWindow;
-            View = new View(new FloatRect(0, 0, mGameWindow.RenderWindow.Size.X, mGameWindow.RenderWindow.Size.Y));
+            View = new View(new FloatRect(0, 0, mWidth, mHeight));
         }
 
         internal View View { get; private set; }

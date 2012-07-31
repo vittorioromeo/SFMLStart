@@ -39,7 +39,7 @@ namespace SFMLStart.Data
         #region Nested type: Frametime
         public static class Frametime
         {
-            public static int StaticValue = 1;
+            public static float StaticValue = 1;
             public static bool IsStatic = false;
         }
         #endregion

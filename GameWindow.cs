@@ -20,16 +20,20 @@ namespace SFMLStart
         private float _frameTime;
         private Game _game;
         private bool _hasFocus, _running;
+        private readonly int _width;
+        private readonly int _height;
 
         public GameWindow(int mScreenWidth, int mScreenHeight, int mPixelMultiplier)
         {
             _stopwatch = new PerformanceStopwatch();
+            _width = mScreenWidth;
+            _height = mScreenHeight;
 
-            RenderWindow = new RenderWindow(new VideoMode((uint) mScreenWidth, (uint) mScreenHeight), "", Styles.Default);
+            RenderWindow = new RenderWindow(new VideoMode((uint)_width, (uint)_height), "", Styles.Default);
             RenderWindow.SetVerticalSyncEnabled(false);
             if (Settings.Framerate.IsLimited) RenderWindow.SetFramerateLimit((uint) Settings.Framerate.Limit);
             RenderWindow.Position = new Vector2i(400, 80);
-            RenderWindow.Size = new Vector2u((uint) (mScreenWidth*mPixelMultiplier), (uint) (mScreenHeight*mPixelMultiplier));
+            RenderWindow.Size = new Vector2u((uint) (mScreenWidth*mPixelMultiplier), (uint) (mScreenHeight*mPixelMultiplier));          
             RenderWindow.GainedFocus += WindowGainedFocus;
             RenderWindow.LostFocus += WindowLostFocus;
         }
@@ -42,7 +46,7 @@ namespace SFMLStart
             _game = mGame;
             _game.GameWindow = this;
 
-            Camera = new Camera(this);
+            Camera = new Camera(this, _width, _height);
 
             _hasFocus = true;
             _running = true;

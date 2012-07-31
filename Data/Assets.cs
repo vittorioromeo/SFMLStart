@@ -187,19 +187,14 @@ namespace SFMLStart.Data
 
             var fileText = Regex.Replace(streamReader.ReadToEnd(), Settings.Assets.Regex, "");
             var separationByGroups = fileText.Split(Settings.Assets.SeparatorGroup);
-            var tilesetName = separationByGroups[0];
-            var animationLooped = Int32.Parse(separationByGroups[1]) == 1;
-            var animationPingpong = Int32.Parse(separationByGroups[2]) == 1;
-            var separationByItems = separationByGroups[3].Split(Settings.Assets.SeparatorItem);
+            var animationLooped = Int32.Parse(separationByGroups[0]) == 1;
+            var animationPingpong = Int32.Parse(separationByGroups[1]) == 1;
+            var separationByItems = separationByGroups[2].Split(Settings.Assets.SeparatorItem);
 
-            if (Tilesets.ContainsKey(tilesetName))
-            {
-                var result = new Animation(Tilesets[tilesetName], animationLooped, animationPingpong);
-                for (var i = 0; i < separationByItems.Length; i++) if ((i + 1)%2 == 0) result.AddStep(separationByItems[i - 1], Int32.Parse(separationByItems[i]));
-                Animations.Add(GetAssetName(mFileInfo), result);
-                Utils.Log(string.Format("animation <<{0}>> created", GetAssetName(mFileInfo)), "InitializeAnimations", ConsoleColor.Yellow);
-            }
-            else Utils.Log(string.Format("tileset <<{0}>> does not exist", tilesetName), "InitializeAnimations", ConsoleColor.Yellow);
+            var result = new Animation(animationLooped, animationPingpong);
+            for (var i = 0; i < separationByItems.Length; i++) if ((i + 1)%2 == 0) result.AddStep(separationByItems[i - 1], Int32.Parse(separationByItems[i]));
+            Animations.Add(GetAssetName(mFileInfo), result);
+            Utils.Log(string.Format("animation <<{0}>> created", GetAssetName(mFileInfo)), "InitializeAnimations", ConsoleColor.Yellow);
         }
 
         public static Texture GetTexture(string mTextureName) { return _textures.ContainsKey(mTextureName) ? _textures[mTextureName] : _textures["missingimage"]; }

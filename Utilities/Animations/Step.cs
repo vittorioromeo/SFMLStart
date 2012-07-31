@@ -2,15 +2,13 @@ namespace SFMLStart.Utilities.Animations
 {
     public class Step
     {
-        public Step(int mX, int mY, int mFrames)
+        public Step(string mLabel, int mFrames)
         {
-            X = mX;
-            Y = mY;
+            Label = mLabel;
             Frames = mFrames;
         }
 
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Frames { get; set; }
+        public int Frames { get; private set; }
+        public string Label { get; private set; }
     }
 }

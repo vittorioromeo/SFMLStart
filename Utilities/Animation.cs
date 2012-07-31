@@ -13,11 +13,8 @@ namespace SFMLStart.Utilities
         private float _frameTimeNext;
         private bool _isBackwards;
 
-        public Animation(Tileset mTileset, bool mIsLooped = true, bool mIsPingPong = false)
+        public Animation(bool mIsLooped = true, bool mIsPingPong = false)
         {
-            Debug.Assert(mTileset != null);
-
-            Tileset = mTileset;
             IsLooped = mIsLooped;
             IsPingPong = mIsPingPong;
             Steps = new List<Step>();
@@ -26,7 +23,6 @@ namespace SFMLStart.Utilities
         public List<Step> Steps { get; set; }
         public Step CurrentStep { get; set; }
         public int CurrentFrame { get; set; }
-        public Tileset Tileset { get; set; }
         public bool IsLooped { get; set; }
         public bool IsPingPong { get; set; }
 
@@ -38,15 +34,10 @@ namespace SFMLStart.Utilities
             CurrentFrame = 0;
         }
 
-        public void AddStep(int mTileX, int mTileY, int mFrames)
+        public void AddStep(string mLabel, int mFrames)
         {
-            Steps.Add(new Step(mTileX, mTileY, mFrames));
-            if (CurrentStep == null) CurrentStep = Steps[0];
-        }
-
-        public void AddStep(string mTilesetLabel, int mFrames)
-        {
-            Steps.Add(new Step(Tileset.Labels[mTilesetLabel].X, Tileset.Labels[mTilesetLabel].Y, mFrames));
+            var step = new Step(mLabel, mFrames);
+            Steps.Add(step);
             if (CurrentStep == null) CurrentStep = Steps[0];
         }
 
@@ -116,6 +107,6 @@ namespace SFMLStart.Utilities
             else CurrentFrame++;
         }
 
-        public IntRect GetCurrentSubRect() { return CurrentStep != null ? Tileset.GetTextureRect(CurrentStep.X, CurrentStep.Y) : new IntRect(0, 0, 0, 0); }
+        public string GetCurrentLabel() { return CurrentStep != null ? CurrentStep.Label : null; }
     }
 }
