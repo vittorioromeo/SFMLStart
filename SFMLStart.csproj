@@ -80,6 +80,8 @@
     <Compile Include="Utilities\Tileset.cs" />
     <Compile Include="Utilities\Timelines\Command.cs" />
     <Compile Include="Utilities\Utils.cs" />
+    <Compile Include="Vectors\SSVector2F.cs" />
+    <Compile Include="Vectors\SSVector2I.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

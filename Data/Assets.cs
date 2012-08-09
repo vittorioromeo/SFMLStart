@@ -15,11 +15,11 @@ namespace SFMLStart.Data
     {
         private static Dictionary<string, Image> _images;
         private static Dictionary<string, Texture> _textures;
+        private static Dictionary<string, Animation> _animations;
 
         static Assets() { Initialize(); }
 
         public static Dictionary<string, Tileset> Tilesets { get; private set; }
-        public static Dictionary<string, Animation> Animations { get; private set; }
         public static Dictionary<string, Sound> Sounds { get; private set; }
         public static Dictionary<string, Music> Music { get; private set; }
 
@@ -30,7 +30,7 @@ namespace SFMLStart.Data
             _images = new Dictionary<string, Image>();
             _textures = new Dictionary<string, Texture>();
             Tilesets = new Dictionary<string, Tileset>();
-            Animations = new Dictionary<string, Animation>();
+            _animations = new Dictionary<string, Animation>();
             Sounds = new Dictionary<string, Sound>();
             Music = new Dictionary<string, Music>();
             if (Settings.Assets.LoadImages) InitializeImages();
@@ -193,10 +193,11 @@ namespace SFMLStart.Data
 
             var result = new Animation(animationLooped, animationPingpong);
             for (var i = 0; i < separationByItems.Length; i++) if ((i + 1)%2 == 0) result.AddStep(separationByItems[i - 1], Int32.Parse(separationByItems[i]));
-            Animations.Add(GetAssetName(mFileInfo), result);
+            _animations.Add(GetAssetName(mFileInfo), result);
             Utils.Log(string.Format("animation <<{0}>> created", GetAssetName(mFileInfo)), "InitializeAnimations", ConsoleColor.Yellow);
         }
 
         public static Texture GetTexture(string mTextureName) { return _textures.ContainsKey(mTextureName) ? _textures[mTextureName] : _textures["missingimage"]; }
+        public static Animation GetAnimation(string mAnimationName) { return _animations[mAnimationName].Clone(); }
     }
 }

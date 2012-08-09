@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using SFML.Window;
 using SFMLStart.Data;
 using SFMLStart.Utilities.Timelines;
+using SFMLStart.Vectors;
 
 #endregion
 
@@ -182,10 +183,10 @@ namespace SFMLStart.Utilities
                     return mRadians;
                 }
 
-                public static float TowardsDegrees(Vector2f mStart, Vector2f mEnd) { return ToDegrees(TowardsRadians(mStart, mEnd)); }
-                public static float TowardsRadians(Vector2f mStart, Vector2f mEnd) { return (float) System.Math.Atan2(mEnd.Y - mStart.Y, mEnd.X - mStart.X); }
-                public static Vector2f ToVectorDegrees(float mDegrees) { return new Vector2f((float) System.Math.Cos(ToRadians(mDegrees)), (float) System.Math.Sin(ToRadians(mDegrees))); }
-                public static Vector2f ToVectorRadians(float mRadians) { return new Vector2f((float) System.Math.Cos(mRadians), (float) System.Math.Sin(mRadians)); }
+                public static float TowardsDegrees(SSVector2F mStart, SSVector2F mEnd) { return ToDegrees(TowardsRadians(mStart, mEnd)); }
+                public static float TowardsRadians(SSVector2F mStart, SSVector2F mEnd) { return (float)System.Math.Atan2(mEnd.Y - mStart.Y, mEnd.X - mStart.X); }
+                public static SSVector2F ToVectorDegrees(float mDegrees) { return new SSVector2F((float)System.Math.Cos(ToRadians(mDegrees)), (float)System.Math.Sin(ToRadians(mDegrees))); }
+                public static SSVector2F ToVectorRadians(float mRadians) { return new SSVector2F((float)System.Math.Cos(mRadians), (float)System.Math.Sin(mRadians)); }
 
                 public static float RotateTowardsAngleDegrees(float mAngle, float mAngleDesired, float mSpeed)
                 {
@@ -194,7 +195,7 @@ namespace SFMLStart.Utilities
                     return WrapDegrees((float) (mAngle + (System.Math.Sin((mAngleDesired - mAngle)/57.3f))*mSpeed));
                 }
 
-                public static float RotateTowardsTargetRadians(Vector2f mStart, Vector2f mTarget, float mCurrentRadians, float mTurnSpeed)
+                public static float RotateTowardsTargetRadians(SSVector2F mStart, SSVector2F mTarget, float mCurrentRadians, float mTurnSpeed)
                 {
                     var x = mTarget.X - mStart.X;
                     var y = mTarget.Y - mStart.Y;
@@ -216,7 +217,7 @@ namespace SFMLStart.Utilities
             #region Nested type: Vectors
             public static class Vectors
             {
-                public static int DotProduct(Vector2i v1, Vector2i v2)
+                public static int DotProduct(SSVector2I v1, SSVector2I v2)
                 {
                     return
                         (
@@ -225,37 +226,37 @@ namespace SFMLStart.Utilities
                         );
                 }
 
-                public static int Length(Vector2i mVector) { return (int) System.Math.Sqrt(mVector.X*mVector.X + mVector.Y*mVector.Y); }
-                public static Vector2i Normalize(Vector2i mVector) { return new Vector2i(mVector.X/Length(mVector), mVector.Y/Length(mVector)); }
-                public static long NormalizeLong(Vector2i mVector) { return mVector.X*mVector.X + mVector.Y*mVector.Y; }
-                public static float ToAngleDegrees(Vector2f mVector) { return Angles.ToDegrees(ToAngleRadians(mVector)); }
-                public static float ToAngleRadians(Vector2f mVector) { return (float) System.Math.Atan2(mVector.Y, mVector.X); }
+                public static int Length(SSVector2I mVector) { return (int)System.Math.Sqrt(mVector.X * mVector.X + mVector.Y * mVector.Y); }
+                public static SSVector2I Normalize(SSVector2I mVector) { return new SSVector2I(mVector.X / Length(mVector), mVector.Y / Length(mVector)); }
+                public static long NormalizeLong(SSVector2I mVector) { return mVector.X * mVector.X + mVector.Y * mVector.Y; }
+                public static float ToAngleDegrees(SSVector2F mVector) { return Angles.ToDegrees(ToAngleRadians(mVector)); }
+                public static float ToAngleRadians(SSVector2F mVector) { return (float)System.Math.Atan2(mVector.Y, mVector.X); }
 
-                public static Vector2f Lerp(Vector2f mVector1, Vector2f mVector2, float value)
+                public static SSVector2F Lerp(SSVector2F mVector1, SSVector2F mVector2, float value)
                 {
-                    return new Vector2f(mVector1.X + (mVector2.X - mVector1.X)*value,
+                    return new SSVector2F(mVector1.X + (mVector2.X - mVector1.X) * value,
                                         mVector1.Y + (mVector2.Y - mVector1.Y)*value);
                 }
 
-                public static Vector2i Lerp(Vector2i mVector1, Vector2i mVector2, float value)
+                public static SSVector2I Lerp(SSVector2I mVector1, SSVector2I mVector2, float value)
                 {
-                    return new Vector2i((int) (mVector1.X + (mVector2.X - mVector1.X)*value),
+                    return new SSVector2I((int)(mVector1.X + (mVector2.X - mVector1.X) * value),
                                         (int) (mVector1.Y + (mVector2.Y - mVector1.Y)*value));
                 }
 
-                public static Vector2f OrbitRadians(Vector2f mParent, float mRadians, float mRadius)
+                public static SSVector2F OrbitRadians(SSVector2F mParent, float mRadians, float mRadius)
                 {
-                    return new Vector2f((float) (mParent.X + System.Math.Cos((mRadians))*mRadius),
+                    return new SSVector2F((float)(mParent.X + System.Math.Cos((mRadians)) * mRadius),
                                         (float) (mParent.Y + System.Math.Sin((mRadians))*mRadius));
                 }
 
-                public static Vector2f OrbitDegrees(Vector2f mParent, float mDegrees, float mRadius)
+                public static SSVector2F OrbitDegrees(SSVector2F mParent, float mDegrees, float mRadius)
                 {
-                    return new Vector2f((float) (mParent.X + System.Math.Cos(Angles.ToRadians(mDegrees))*mRadius),
+                    return new SSVector2F((float)(mParent.X + System.Math.Cos(Angles.ToRadians(mDegrees)) * mRadius),
                                         (float) (mParent.Y + System.Math.Sin(Angles.ToRadians(mDegrees))*mRadius));
                 }
 
-                public static Vector2i RotatePointRadians(Vector2i mPoint, Vector2i mOrigin, float mRadians)
+                public static SSVector2I RotatePointRadians(SSVector2I mPoint, SSVector2I mOrigin, float mRadians)
                 {
                     var s = (float) System.Math.Sin(mRadians);
                     var c = (float) System.Math.Cos(mRadians);

@@ -20,7 +20,11 @@ namespace SFMLStart
         }
 
         internal View View { get; private set; }
-        public Vector2f MousePosition { get { return _renderWindow.ConvertCoords(new Vector2i(Mouse.GetPosition(_renderWindow).X, Mouse.GetPosition(_renderWindow).Y), View); } }
+        public Vector2f MousePosition { get
+        {
+            var mousePosition = Mouse.GetPosition(_renderWindow);
+            return _renderWindow.ConvertCoords(new Vector2i(mousePosition.X, mousePosition.Y), View);
+        } }
         public Vector2f ConvertCoords(float mX, float mY) { return _renderWindow.ConvertCoords(new Vector2i((int) mX, (int) mY), View); }
 
         public void Resize(float mXOffset, float mYOffset, float mWidth, float mHeight)

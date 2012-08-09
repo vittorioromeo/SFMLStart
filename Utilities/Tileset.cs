@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SFML.Graphics;
 using SFML.Window;
+using SFMLStart.Vectors;
 
 #endregion
 
@@ -11,7 +12,7 @@ namespace SFMLStart.Utilities
     {
         public Tileset(int mTileWidth, int mTileHeight, int mSeparation)
         {
-            Labels = new Dictionary<string, Vector2i>();
+            Labels = new Dictionary<string, SSVector2I>();
 
             TileWidth = mTileWidth;
             TileHeight = mTileHeight;
@@ -26,7 +27,7 @@ namespace SFMLStart.Utilities
         public int TileHeight { get; set; }
         public int Separation { get; set; }
 
-        public Dictionary<string, Vector2i> Labels { get; set; }
+        public Dictionary<string, SSVector2I> Labels { get; set; }
 
         public Sprite GetSprite(int mX, int mY, Texture mTexture)
         {
@@ -55,6 +56,6 @@ namespace SFMLStart.Utilities
             return new IntRect(mX*TileWidth + Separation*mX, mY*TileHeight + Separation*mY, TileWidth, TileHeight);
         }
 
-        public void SetLabel(string mLabel, int mIndexX, int mIndexY) { Labels.Add(mLabel, new Vector2i(mIndexX, mIndexY)); }
+        public void SetLabel(string mLabel, int mIndexX, int mIndexY) { Labels.Add(mLabel, new SSVector2I(mIndexX, mIndexY)); }
     }
 }

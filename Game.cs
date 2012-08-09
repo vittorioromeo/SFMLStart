@@ -10,12 +10,12 @@ namespace SFMLStart
 {
     public class Game
     {
-        public GameWindow GameWindow { get; set; }
-        public float GlobalInputDelay { get; set; }
+        public GameWindow GameWindow { get; internal set; }
         public Action<float> OnUpdate { get; set; }
         public Action OnDrawBeforeCamera { get; set; }
         public Action OnDrawAfterCamera { get; set; }
         public Action OnDrawAfterDefault { get; set; }
+        public float GlobalInputDelay { get; set; }
 
         public void Bind(string mBindName, int mBindDelay, Action mActionTrue, Action mActionFalse, KeyCombination mKeyCombination) { Input.Bind(this, mBindName, mBindDelay, mActionTrue, mActionFalse, mKeyCombination); }
 

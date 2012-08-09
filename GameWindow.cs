@@ -13,15 +13,14 @@ namespace SFMLStart
 {
     public class GameWindow
     {
+        private Game _game;
         private readonly List<string> _inputs = new List<string>();
         private readonly Keyboard.Key[] _keyCodes = (Keyboard.Key[]) Enum.GetValues(typeof (Keyboard.Key));
         private readonly Mouse.Button[] _mouseButtons = (Mouse.Button[]) Enum.GetValues(typeof (Mouse.Button));
         private readonly PerformanceStopwatch _stopwatch;
+        private readonly int _width, _height;
         private float _frameTime;
-        private Game _game;
         private bool _hasFocus, _running;
-        private readonly int _width;
-        private readonly int _height;
 
         public GameWindow(int mScreenWidth, int mScreenHeight, int mPixelMultiplier)
         {
@@ -29,17 +28,18 @@ namespace SFMLStart
             _width = mScreenWidth;
             _height = mScreenHeight;
 
-            RenderWindow = new RenderWindow(new VideoMode((uint)_width, (uint)_height), "", Styles.Default);
+            RenderWindow = new RenderWindow(new VideoMode((uint) _width, (uint) _height), "", Styles.Default);
             RenderWindow.SetVerticalSyncEnabled(false);
             if (Settings.Framerate.IsLimited) RenderWindow.SetFramerateLimit((uint) Settings.Framerate.Limit);
             RenderWindow.Position = new Vector2i(400, 80);
-            RenderWindow.Size = new Vector2u((uint) (mScreenWidth*mPixelMultiplier), (uint) (mScreenHeight*mPixelMultiplier));          
+            RenderWindow.Size = new Vector2u((uint) (mScreenWidth*mPixelMultiplier), (uint) (mScreenHeight*mPixelMultiplier));
             RenderWindow.GainedFocus += WindowGainedFocus;
             RenderWindow.LostFocus += WindowLostFocus;
         }
 
         public Camera Camera { get; private set; }
         public RenderWindow RenderWindow { get; private set; }
+        public float FPS { get; private set; }
 
         public void SetGame(Game mGame)
         {
@@ -60,8 +60,9 @@ namespace SFMLStart
             while (_running)
             {
                 RenderWindow.SetActive();
-                _frameTime = (float) _stopwatch.Elapsed*60f;
-                if (Settings.Frametime.IsStatic) _frameTime = Settings.Frametime.StaticValue;
+
+                _frameTime = Settings.Frametime.IsStatic ? Settings.Frametime.StaticValue : (float) _stopwatch.Elapsed*60f;
+                FPS = 60 / _frameTime;
 
                 _stopwatch.Start();
                 RenderWindow.Clear(Color.White);

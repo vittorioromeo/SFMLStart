@@ -1,7 +1,6 @@
 ﻿#region
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using SFML.Graphics;
 using SFMLStart.Utilities.Animations;
 
 #endregion
@@ -92,10 +91,11 @@ namespace SFMLStart.Utilities
         {
             _frameTimeNext += mFrameTime;
             if (_frameTimeNext < 1) return;
+            var remainder = _frameTimeNext - (int) Math.Floor(_frameTimeNext);
 
             for (var i = 0; i < _frameTimeNext; i++) StepForward();
 
-            _frameTimeNext = 0;
+            _frameTimeNext = remainder;
         }
 
         public void StepForward()
@@ -108,5 +108,13 @@ namespace SFMLStart.Utilities
         }
 
         public string GetCurrentLabel() { return CurrentStep != null ? CurrentStep.Label : null; }
+
+        public Animation Clone()
+        {
+            var result = new Animation(IsLooped, IsPingPong);
+            result.Steps = new List<Step>(Steps);
+            result.CurrentStep = result.Steps[0];
+            return result;
+        }
     }
 }
