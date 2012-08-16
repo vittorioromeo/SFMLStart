@@ -232,6 +232,9 @@ namespace SFMLStart.Utilities
                 public static float ToAngleDegrees(SSVector2F mVector) { return Angles.ToDegrees(ToAngleRadians(mVector)); }
                 public static float ToAngleRadians(SSVector2F mVector) { return (float)System.Math.Atan2(mVector.Y, mVector.X); }
 
+                
+
+
                 public static SSVector2F Lerp(SSVector2F mVector1, SSVector2F mVector2, float value)
                 {
                     return new SSVector2F(mVector1.X + (mVector2.X - mVector1.X) * value,
@@ -274,6 +277,17 @@ namespace SFMLStart.Utilities
                     mPoint.Y = (int) (ynew + mOrigin.Y);
 
                     return mPoint;
+                }
+            }
+            #endregion
+
+            #region Nested type: ToDeprecate
+            public static class ToDeprecate
+            {
+                public static Vector2f Lerp(Vector2f mVector1, Vector2f mVector2, float value)
+                {
+                    return new Vector2f(mVector1.X + (mVector2.X - mVector1.X) * value,
+                                        mVector1.Y + (mVector2.Y - mVector1.Y) * value);
                 }
             }
             #endregion
