@@ -280,17 +280,6 @@ namespace SFMLStart.Utilities
                 }
             }
             #endregion
-
-            #region Nested type: ToDeprecate
-            public static class ToDeprecate
-            {
-                public static Vector2f Lerp(Vector2f mVector1, Vector2f mVector2, float value)
-                {
-                    return new Vector2f(mVector1.X + (mVector2.X - mVector1.X) * value,
-                                        mVector1.Y + (mVector2.Y - mVector1.Y) * value);
-                }
-            }
-            #endregion
         }
         #endregion
 
