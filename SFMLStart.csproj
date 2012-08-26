@@ -40,15 +40,15 @@
   <ItemGroup>
     <Reference Include="sfmlnet-audio-2, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\May\LaurentGomila-SFML.Net-85a5369\lib\x86\sfmlnet-audio-2.dll</HintPath>
+      <HintPath>bin\Release\sfmlnet-audio-2.dll</HintPath>
     </Reference>
     <Reference Include="sfmlnet-graphics-2, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\May\LaurentGomila-SFML.Net-85a5369\lib\x86\sfmlnet-graphics-2.dll</HintPath>
+      <HintPath>bin\Release\sfmlnet-graphics-2.dll</HintPath>
     </Reference>
     <Reference Include="sfmlnet-window-2, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\May\LaurentGomila-SFML.Net-85a5369\lib\x86\sfmlnet-window-2.dll</HintPath>
+      <HintPath>bin\Release\sfmlnet-window-2.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -61,6 +61,7 @@
     <Compile Include="Data\Bind.cs" />
     <Compile Include="Data\Input.cs" />
     <Compile Include="Data\KeyCombination.cs" />
+    <Compile Include="Utilities\DrawAction.cs" />
     <Compile Include="Utilities\Animations\Step.cs" />
     <Compile Include="Utilities\BinaryTree.cs" />
     <Compile Include="Utilities\PerformanceStopwatch.cs" />

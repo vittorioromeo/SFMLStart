@@ -1,6 +1,8 @@
 ﻿#region
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 using SFMLStart.Data;
 using SFMLStart.Utilities;
 
@@ -10,14 +12,29 @@ namespace SFMLStart
 {
     public class Game
     {
+        private readonly List<DrawAction> _drawActions;
+
+        public Game()
+        {
+            _drawActions = new List<DrawAction>();           
+        }
+
         public GameWindow GameWindow { get; internal set; }
         public Action<float> OnUpdate { get; set; }
         public Action OnDrawBeforeCamera { get; set; }
-        public Action OnDrawAfterCamera { get; set; }
         public Action OnDrawAfterDefault { get; set; }
         public float GlobalInputDelay { get; set; }
 
         public void Bind(string mBindName, int mBindDelay, Action mActionTrue, Action mActionFalse, KeyCombination mKeyCombination) { Input.Bind(this, mBindName, mBindDelay, mActionTrue, mActionFalse, mKeyCombination); }
+
+        public void AddDrawAction(Action mAction, int mPriority = 0)
+        {
+            _drawActions.Add(new DrawAction(mAction, mPriority));       
+        }
+        public void RemoveDrawAction(Action mAction)
+        {
+            _drawActions.Remove(_drawActions.First(x => x.Action == mAction));
+        }
 
         public void Update(float mFrameTime)
         {
@@ -50,7 +67,7 @@ namespace SFMLStart
         {
             OnDrawBeforeCamera.SafeInvoke();
             GameWindow.RenderWindow.SetView(GameWindow.Camera.View);
-            OnDrawAfterCamera.SafeInvoke();
+            foreach(var drawAction in _drawActions.OrderBy(x => x.Priority)) drawAction.Action.SafeInvoke();
             GameWindow.RenderWindow.SetView(GameWindow.RenderWindow.DefaultView);
             OnDrawAfterDefault.SafeInvoke();
         }

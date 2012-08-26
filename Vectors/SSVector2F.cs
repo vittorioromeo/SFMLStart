@@ -1,3 +1,6 @@
+using System;
+using SFMLStart.Utilities;
+
 namespace SFMLStart.Vectors
 {
     public struct SSVector2F
@@ -32,6 +35,21 @@ namespace SFMLStart.Vectors
             }
         }
         public override string ToString() { return string.Format("X:{0} Y:{1}", _x, _y); }
+
+        public double GetDotProduct(SSVector2I mVector)
+        {
+            return X * mVector.X + Y * mVector.Y;
+        }
+        public double GetLength()
+        {
+            return Math.Sqrt(X * X + Y * Y);
+        }
+        public double GetAngleBetween(SSVector2I mVector)
+        {
+            var cos = GetDotProduct(mVector) / (GetLength() * mVector.GetLength());
+            return Utils.Math.Angles.ToDegrees((float)Math.Acos(cos));
+        }
+
 
         public static SSVector2F operator +(SSVector2F mVector1, SSVector2F mVector2I) { return new SSVector2F(mVector1.X + mVector2I.X, mVector1.Y + mVector2I.Y); }
         public static SSVector2F operator -(SSVector2F mVector1, SSVector2F mVector2I) { return new SSVector2F(mVector1.X - mVector2I.X, mVector1.Y - mVector2I.Y); }
