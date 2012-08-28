@@ -1,4 +1,7 @@
+#region
 using System;
+
+#endregion
 
 namespace SFMLStart.Utilities
 {

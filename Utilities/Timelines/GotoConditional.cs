@@ -1,4 +1,7 @@
+#region
 using System;
+
+#endregion
 
 namespace SFMLStart.Utilities.Timelines
 {
@@ -22,7 +25,12 @@ namespace SFMLStart.Utilities.Timelines
 
         public Func<bool> Condition { get; set; }
 
-        public override Command Clone() { return TargetLabel != null ? new GotoConditional(Condition, TargetLabel, Times) : new GotoConditional(Condition, TargetIndex, Times); }
+        public override Command Clone()
+        {
+            return TargetLabel != null
+                       ? new GotoConditional(Condition, TargetLabel, Times)
+                       : new GotoConditional(Condition, TargetIndex, Times);
+        }
 
         public override void Update()
         {

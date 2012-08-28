@@ -40,7 +40,6 @@ namespace SFMLStart.Data
             if (Settings.Assets.LoadSounds) InitializeSounds();
             if (Settings.Assets.LoadMusic) InitializeMusic();
         }
-
         private static void InitializeImages()
         {
             _images.Add("missingimage", new Image(45, 45, Color.Magenta));
@@ -61,9 +60,11 @@ namespace SFMLStart.Data
                 {
                     if (!Settings.Assets.ImagesExtensions.Contains(fileInfo.Extension.ToLower())) continue;
                     var directoryName = directoryInfo.FullName.Replace(imageDirectory.FullName, @"");
-                    if (!directoryInfo.FullName.EndsWith("\\")) directoryName = directoryName.Insert(directoryName.Length, "\\");
+                    if (!directoryInfo.FullName.EndsWith("\\"))
+                        directoryName = directoryName.Insert(directoryName.Length, "\\");
                     _images.Add(directoryName + GetAssetName(fileInfo), new Image(fileInfo.FullName));
-                    Utils.Log(string.Format("image <<{0}>> loaded", directoryName + GetAssetName(fileInfo)), "InitializeImages");
+                    Utils.Log(string.Format("image <<{0}>> loaded", directoryName + GetAssetName(fileInfo)),
+                              "InitializeImages");
                 }
             }
         }
@@ -80,7 +81,8 @@ namespace SFMLStart.Data
             var tilesetDirectory = new DirectoryInfo(Settings.Paths.Tilesets);
             if (!tilesetDirectory.Exists)
             {
-                Utils.Log(string.Format("directory <<{0}>> does not exist", tilesetDirectory.FullName), "InitializeTilesets", ConsoleColor.Magenta);
+                Utils.Log(string.Format("directory <<{0}>> does not exist", tilesetDirectory.FullName),
+                          "InitializeTilesets", ConsoleColor.Magenta);
                 return;
             }
 
@@ -99,7 +101,8 @@ namespace SFMLStart.Data
             var animationDirectory = new DirectoryInfo(Settings.Paths.Animations);
             if (!animationDirectory.Exists)
             {
-                Utils.Log(string.Format("directory <<{0}>> does not exist", animationDirectory.FullName), "InitializeAnimations", ConsoleColor.Yellow);
+                Utils.Log(string.Format("directory <<{0}>> does not exist", animationDirectory.FullName),
+                          "InitializeAnimations", ConsoleColor.Yellow);
                 return;
             }
 
@@ -118,7 +121,8 @@ namespace SFMLStart.Data
             var soundsDirectory = new DirectoryInfo(Settings.Paths.Sounds);
             if (!soundsDirectory.Exists)
             {
-                Utils.Log(string.Format("directory <<{0}>> does not exist", soundsDirectory.FullName), "InitializeSounds", ConsoleColor.White);
+                Utils.Log(string.Format("directory <<{0}>> does not exist", soundsDirectory.FullName),
+                          "InitializeSounds", ConsoleColor.White);
                 return;
             }
 
@@ -130,10 +134,12 @@ namespace SFMLStart.Data
                 {
                     if (!Settings.Assets.SoundsExtensions.Contains(fileInfo.Extension.ToLower())) continue;
                     var directoryName = directoryInfo.FullName.Replace(soundsDirectory.FullName, @"");
-                    if (!directoryInfo.FullName.EndsWith("\\")) directoryName = directoryName.Insert(directoryName.Length, "\\");
+                    if (!directoryInfo.FullName.EndsWith("\\"))
+                        directoryName = directoryName.Insert(directoryName.Length, "\\");
                     var soundBuffer = new SoundBuffer(fileInfo.FullName);
                     Sounds.Add(directoryName + GetAssetName(fileInfo), new Sound(soundBuffer));
-                    Utils.Log(string.Format("sound <<{0}>> loaded", directoryName + GetAssetName(fileInfo)), "InitializeSounds", ConsoleColor.White);
+                    Utils.Log(string.Format("sound <<{0}>> loaded", directoryName + GetAssetName(fileInfo)),
+                              "InitializeSounds", ConsoleColor.White);
                 }
         }
         private static void InitializeMusic()
@@ -141,7 +147,8 @@ namespace SFMLStart.Data
             var musicDirectory = new DirectoryInfo(Settings.Paths.Music);
             if (!musicDirectory.Exists)
             {
-                Utils.Log(string.Format("directory <<{0}>> does not exist", musicDirectory.FullName), "InitializeMusic", ConsoleColor.Red);
+                Utils.Log(string.Format("directory <<{0}>> does not exist", musicDirectory.FullName), "InitializeMusic",
+                          ConsoleColor.Red);
                 return;
             }
 
@@ -153,9 +160,11 @@ namespace SFMLStart.Data
                 {
                     if (!Settings.Assets.MusicExtensions.Contains(fileInfo.Extension.ToLower())) continue;
                     var directoryName = directoryInfo.FullName.Replace(musicDirectory.FullName, @"");
-                    if (!directoryInfo.FullName.EndsWith("\\")) directoryName = directoryName.Insert(directoryName.Length, "\\");
+                    if (!directoryInfo.FullName.EndsWith("\\"))
+                        directoryName = directoryName.Insert(directoryName.Length, "\\");
                     Music.Add(directoryName + GetAssetName(fileInfo), new Music(fileInfo.FullName));
-                    Utils.Log(string.Format("sound <<{0}>> loaded", directoryName + GetAssetName(fileInfo)), "InitializeMusic", ConsoleColor.Red);
+                    Utils.Log(string.Format("sound <<{0}>> loaded", directoryName + GetAssetName(fileInfo)),
+                              "InitializeMusic", ConsoleColor.Red);
                 }
         }
 
@@ -171,7 +180,8 @@ namespace SFMLStart.Data
             var tileSeparation = Int32.Parse(separationByGroups[1]);
 
             Tilesets.Add(GetAssetName(mFileInfo), new Tileset(tileWidth, tileHeight, tileSeparation));
-            Utils.Log(string.Format("tileset <<{0}>> loaded", GetAssetName(mFileInfo)), "InitializeTilesets", ConsoleColor.Magenta);
+            Utils.Log(string.Format("tileset <<{0}>> loaded", GetAssetName(mFileInfo)), "InitializeTilesets",
+                      ConsoleColor.Magenta);
 
             for (var iY = 2; iY < separationByGroups.Length; iY++)
                 for (var iX = 0; iX < separationByGroups[iY].Split(',').Length; iX++)
@@ -192,9 +202,11 @@ namespace SFMLStart.Data
             var separationByItems = separationByGroups[2].Split(Settings.Assets.SeparatorItem);
 
             var result = new Animation(animationLooped, animationPingpong);
-            for (var i = 0; i < separationByItems.Length; i++) if ((i + 1)%2 == 0) result.AddStep(separationByItems[i - 1], Int32.Parse(separationByItems[i]));
+            for (var i = 0; i < separationByItems.Length; i++)
+                if ((i + 1)%2 == 0) result.AddStep(separationByItems[i - 1], Int32.Parse(separationByItems[i]));
             _animations.Add(GetAssetName(mFileInfo), result);
-            Utils.Log(string.Format("animation <<{0}>> created", GetAssetName(mFileInfo)), "InitializeAnimations", ConsoleColor.Yellow);
+            Utils.Log(string.Format("animation <<{0}>> created", GetAssetName(mFileInfo)), "InitializeAnimations",
+                      ConsoleColor.Yellow);
         }
 
         public static Texture GetTexture(string mTextureName) { return _textures.ContainsKey(mTextureName) ? _textures[mTextureName] : _textures["missingimage"]; }

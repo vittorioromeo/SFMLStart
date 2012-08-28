@@ -22,6 +22,7 @@ namespace SFMLStart.Utilities.Timelines
         public int Times { get; set; }
 
         public override void Initialize() { }
+
         public override Command Clone() { return TargetLabel != null ? new Goto(TargetLabel, Times) : new Goto(TargetIndex, Times); }
 
         public override void Update()

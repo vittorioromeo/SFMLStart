@@ -10,13 +10,14 @@ namespace SFMLStart.Utilities
         private static readonly double Frequency = GetFrequency();
         private long _start;
         private long _stop;
+
         public double Elapsed { get { return (_stop - _start)/Frequency; } }
 
-        [DllImport("Kernel32.dll")] private static extern bool QueryPerformanceCounter(
-            out long lpPerformanceCount);
+        [DllImport("Kernel32.dll")]
+        private static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
 
-        [DllImport("Kernel32.dll")] private static extern bool QueryPerformanceFrequency(
-            out long lpFrequency);
+        [DllImport("Kernel32.dll")]
+        private static extern bool QueryPerformanceFrequency(out long lpFrequency);
 
         // static - so this value used in all instances of 
 
@@ -29,7 +30,6 @@ namespace SFMLStart.Utilities
         }
 
         public void Start() { QueryPerformanceCounter(out _start); }
-
         public void Stop() { QueryPerformanceCounter(out _stop); }
     }
 }

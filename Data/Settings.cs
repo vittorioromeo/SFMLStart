@@ -27,7 +27,6 @@ namespace SFMLStart.Data
             public static List<string> MusicExtensions = new List<string> {".wav", ".ogg"};
         }
         #endregion
-
         #region Nested type: Framerate
         public static class Framerate
         {
@@ -35,7 +34,6 @@ namespace SFMLStart.Data
             public static bool IsLimited;
         }
         #endregion
-
         #region Nested type: Frametime
         public static class Frametime
         {
@@ -43,14 +41,12 @@ namespace SFMLStart.Data
             public static bool IsStatic = false;
         }
         #endregion
-
         #region Nested type: Logging
         public static class Logging
         {
             public static bool IsEnabled = true;
         }
         #endregion
-
         #region Nested type: Paths
         public static class Paths
         {

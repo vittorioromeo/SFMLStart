@@ -1,5 +1,8 @@
+#region
 using System;
 using SFMLStart.Utilities;
+
+#endregion
 
 namespace SFMLStart.Vectors
 {
@@ -13,50 +16,52 @@ namespace SFMLStart.Vectors
             _x = mX;
             _y = mY;
         }
+        public SSVector2F(SSVector2I mVector2I)
+        {
+            _x = mVector2I.X;
+            _y = mVector2I.Y;
+        }
 
         public float X { get { return _x; } set { _x = value; } }
         public float Y { get { return _y; } set { _y = value; } }
 
-        public bool Equals(SSVector2F other)
-        {
-            return _x == other._x && _y == other._y;
-        }
-
+        public bool Equals(SSVector2F mVector) { return _x == mVector._x && _y == mVector._y; }
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
-            return obj is SSVector2I && Equals((SSVector2I)obj);
+            return obj is SSVector2I && Equals((SSVector2I) obj);
         }
+
         public override int GetHashCode()
         {
             unchecked
             {
-                return (int)(_x * 397) ^ (int)_y;
+                return (int) (_x*397) ^ (int) _y;
             }
         }
         public override string ToString() { return string.Format("X:{0} Y:{1}", _x, _y); }
-
-        public double GetDotProduct(SSVector2I mVector)
+        #region Utilities
+        public double GetDotProduct(SSVector2F mVector) { return X*mVector.X + Y*mVector.Y; }
+        public double GetLength() { return Math.Sqrt(X*X + Y*Y); }
+        public double GetAngleBetween(SSVector2F mVector)
         {
-            return X * mVector.X + Y * mVector.Y;
+            var cos = GetDotProduct(mVector)/(GetLength()*mVector.GetLength());
+            return Utils.Math.Angles.ToDegrees((float) Math.Acos(cos));
         }
-        public double GetLength()
-        {
-            return Math.Sqrt(X * X + Y * Y);
-        }
-        public double GetAngleBetween(SSVector2I mVector)
-        {
-            var cos = GetDotProduct(mVector) / (GetLength() * mVector.GetLength());
-            return Utils.Math.Angles.ToDegrees((float)Math.Acos(cos));
-        }
-
-
-        public static SSVector2F operator +(SSVector2F mVector1, SSVector2F mVector2I) { return new SSVector2F(mVector1.X + mVector2I.X, mVector1.Y + mVector2I.Y); }
-        public static SSVector2F operator -(SSVector2F mVector1, SSVector2F mVector2I) { return new SSVector2F(mVector1.X - mVector2I.X, mVector1.Y - mVector2I.Y); }
-        public static SSVector2F operator *(SSVector2F mVector, int mScalar) { return new SSVector2F(mVector.X * mScalar, mVector.Y * mScalar); }
-        public static SSVector2F operator *(SSVector2F mVector, float mScalar) { return new SSVector2F((int)(mVector.X * mScalar), (int)(mVector.Y * mScalar)); }
-        public static bool operator ==(SSVector2F mVector1, SSVector2F mVector2I) { return mVector1.X == mVector2I.X && mVector1.Y == mVector2I.Y; }
-        public static bool operator !=(SSVector2F mVector1, SSVector2F mVector2I) { return mVector1.X != mVector2I.X || mVector1.Y != mVector2I.Y; }
-        public static implicit operator SSVector2F(SSVector2I mVector2I) { return new SSVector2F(mVector2I.X, mVector2I.Y); }
+        public SSVector2F GetNormalized() { return new SSVector2F((float) (X/GetLength()), (float) (Y/GetLength())); }
+        public float ToAngleDegrees() { return Utils.Math.Angles.ToDegrees(ToAngleRadians()); }
+        public float ToAngleRadians() { return (float) Math.Atan2(Y, X); }
+        #endregion
+        #region Operator Overloads
+        public static SSVector2F operator +(SSVector2F mVector1, SSVector2F mVector2) { return new SSVector2F(mVector1.X + mVector2.X, mVector1.Y + mVector2.Y); }
+        public static SSVector2F operator -(SSVector2F mVector1, SSVector2F mVector2) { return new SSVector2F(mVector1.X - mVector2.X, mVector1.Y - mVector2.Y); }
+        public static SSVector2F operator *(SSVector2F mVector, int mScalar) { return new SSVector2F(mVector.X*mScalar, mVector.Y*mScalar); }
+        public static SSVector2F operator *(SSVector2F mVector, float mScalar) { return new SSVector2F(mVector.X*mScalar, mVector.Y*mScalar); }
+        public static SSVector2F operator /(SSVector2F mVector, int mScalar) { return new SSVector2F(mVector.X/mScalar, mVector.Y/mScalar); }
+        public static SSVector2F operator /(SSVector2F mVector, float mScalar) { return new SSVector2F(mVector.X/mScalar, mVector.Y/mScalar); }
+        public static bool operator ==(SSVector2F mVector1, SSVector2F mVector2) { return mVector1.X == mVector2.X && mVector1.Y == mVector2.Y; }
+        public static bool operator !=(SSVector2F mVector1, SSVector2F mVector2) { return mVector1.X != mVector2.X || mVector1.Y != mVector2.Y; }
+        public static explicit operator SSVector2I(SSVector2F mVector) { return new SSVector2I(mVector); }
+        #endregion
     }
 }

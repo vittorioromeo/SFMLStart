@@ -106,7 +106,6 @@ namespace SFMLStart.Utilities
             if (CurrentFrame == CurrentStep.Frames) NextStep();
             else CurrentFrame++;
         }
-
         public string GetCurrentLabel() { return CurrentStep != null ? CurrentStep.Label : null; }
 
         public Animation Clone()

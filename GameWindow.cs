@@ -13,13 +13,14 @@ namespace SFMLStart
 {
     public class GameWindow
     {
-        private Game _game;
+        private readonly int _height;
         private readonly List<string> _inputs = new List<string>();
         private readonly Keyboard.Key[] _keyCodes = (Keyboard.Key[]) Enum.GetValues(typeof (Keyboard.Key));
         private readonly Mouse.Button[] _mouseButtons = (Mouse.Button[]) Enum.GetValues(typeof (Mouse.Button));
         private readonly PerformanceStopwatch _stopwatch;
-        private readonly int _width, _height;
+        private readonly int _width;
         private float _frameTime;
+        private Game _game;
         private bool _hasFocus, _running;
 
         public GameWindow(int mScreenWidth, int mScreenHeight, int mPixelMultiplier)
@@ -61,8 +62,10 @@ namespace SFMLStart
             {
                 RenderWindow.SetActive();
 
-                _frameTime = Settings.Frametime.IsStatic ? Settings.Frametime.StaticValue : (float) _stopwatch.Elapsed*60f;
-                FPS = 60 / _frameTime;
+                _frameTime = Settings.Frametime.IsStatic
+                                 ? Settings.Frametime.StaticValue
+                                 : (float) _stopwatch.Elapsed*60f;
+                FPS = 60/_frameTime;
 
                 _stopwatch.Start();
                 RenderWindow.Clear(Color.White);
@@ -75,7 +78,6 @@ namespace SFMLStart
                 _stopwatch.Stop();
             }
         }
-
         private void RunInputs()
         {
             _inputs.Clear();
@@ -83,8 +85,11 @@ namespace SFMLStart
 
             if (_hasFocus == false) return;
 
-            for (var i = 0; i < _keyCodes.GetLength(0); i++) if (Keyboard.IsKeyPressed(_keyCodes[i])) _inputs.Add(_keyCodes[i].GetType() + _keyCodes[i].ToString());
-            for (var i = 0; i < _mouseButtons.GetLength(0); i++) if (Mouse.IsButtonPressed(_mouseButtons[i])) _inputs.Add(_mouseButtons[i].GetType() + _mouseButtons[i].ToString());
+            for (var i = 0; i < _keyCodes.GetLength(0); i++)
+                if (Keyboard.IsKeyPressed(_keyCodes[i])) _inputs.Add(_keyCodes[i].GetType() + _keyCodes[i].ToString());
+            for (var i = 0; i < _mouseButtons.GetLength(0); i++)
+                if (Mouse.IsButtonPressed(_mouseButtons[i]))
+                    _inputs.Add(_mouseButtons[i].GetType() + _mouseButtons[i].ToString());
         }
 
         internal bool IsInputCombinationDown(KeyCombination mInput) { return mInput.Inputs.All(input => _inputs.Contains(input)); }

@@ -15,6 +15,7 @@ namespace SFMLStart.Utilities.Timelines
         public int Frames { get; set; }
 
         public override void Initialize() { if (Variable != null) Frames = CurrentFrame = (int) Timeline.Parameters[Variable]; }
+
         public override Command Clone() { return new Wait(Frames); }
 
         public override void Update()

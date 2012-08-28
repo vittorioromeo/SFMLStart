@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Collections;
 using SFMLStart.Data;
 using SFMLStart.Utilities;
 
@@ -14,10 +13,7 @@ namespace SFMLStart
     {
         private readonly List<DrawAction> _drawActions;
 
-        public Game()
-        {
-            _drawActions = new List<DrawAction>();           
-        }
+        public Game() { _drawActions = new List<DrawAction>(); }
 
         public GameWindow GameWindow { get; internal set; }
         public Action<float> OnUpdate { get; set; }
@@ -25,16 +21,13 @@ namespace SFMLStart
         public Action OnDrawAfterDefault { get; set; }
         public float GlobalInputDelay { get; set; }
 
-        public void Bind(string mBindName, int mBindDelay, Action mActionTrue, Action mActionFalse, KeyCombination mKeyCombination) { Input.Bind(this, mBindName, mBindDelay, mActionTrue, mActionFalse, mKeyCombination); }
+        public void Bind(string mBindName, int mBindDelay, Action mActionTrue, Action mActionFalse, KeyCombination mKeyCombination)
+        {
+            Input.Bind(this, mBindName, mBindDelay, mActionTrue, mActionFalse, mKeyCombination);
+        }
 
-        public void AddDrawAction(Action mAction, int mPriority = 0)
-        {
-            _drawActions.Add(new DrawAction(mAction, mPriority));       
-        }
-        public void RemoveDrawAction(Action mAction)
-        {
-            _drawActions.Remove(_drawActions.First(x => x.Action == mAction));
-        }
+        public void AddDrawAction(Action mAction, int mPriority = 0) { _drawActions.Add(new DrawAction(mAction, mPriority)); }
+        public void RemoveDrawAction(Action mAction) { _drawActions.Remove(_drawActions.First(x => x.Action == mAction)); }
 
         public void Update(float mFrameTime)
         {
@@ -52,7 +45,10 @@ namespace SFMLStart
                     dataInput.CurrentDelay = dataInput.MaxDelay;
                     GlobalInputDelay = dataInput.GlobalDelay;
 
-                    foreach (var input in Input.Binds.Where(x => dataInput.KeyCombination.Inputs.Any(x.KeyCombination.Inputs.Contains)))
+                    foreach (
+                        var input in
+                            Input.Binds.Where(x => dataInput.KeyCombination.Inputs.Any(x.KeyCombination.Inputs.Contains))
+                        )
                         input.CurrentDelay = dataInput.MaxDelay;
                 }
                 else if (dataInput.ActionFalse != null) dataInput.ActionFalse.Invoke();
@@ -67,7 +63,7 @@ namespace SFMLStart
         {
             OnDrawBeforeCamera.SafeInvoke();
             GameWindow.RenderWindow.SetView(GameWindow.Camera.View);
-            foreach(var drawAction in _drawActions.OrderBy(x => x.Priority)) drawAction.Action.SafeInvoke();
+            foreach (var drawAction in _drawActions.OrderBy(x => x.Priority)) drawAction.Action.SafeInvoke();
             GameWindow.RenderWindow.SetView(GameWindow.RenderWindow.DefaultView);
             OnDrawAfterDefault.SafeInvoke();
         }

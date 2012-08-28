@@ -76,7 +76,8 @@ namespace SFMLStart.Utilities
             var tmpArray = new ArrayList();
 
             foreach (var pair in
-                _keyPairs.Keys.Cast<SectionPair>().Where(pair => pair.Section == sectionName.ToUpper())) tmpArray.Add(pair.Key);
+                _keyPairs.Keys.Cast<SectionPair>().Where(pair => pair.Section == sectionName.ToUpper()))
+                tmpArray.Add(pair.Key);
 
             return (String[]) tmpArray.ToArray(typeof (String));
         }
@@ -107,7 +108,8 @@ namespace SFMLStart.Utilities
             var strToSave = "";
 
             foreach (var sectionPair in
-                _keyPairs.Keys.Cast<SectionPair>().Where(sectionPair => !sections.Contains(sectionPair.Section))) sections.Add(sectionPair.Section);
+                _keyPairs.Keys.Cast<SectionPair>().Where(sectionPair => !sections.Contains(sectionPair.Section)))
+                sections.Add(sectionPair.Section);
 
             foreach (String section in sections)
             {
@@ -132,7 +134,6 @@ namespace SFMLStart.Utilities
         }
 
         public void SaveSettings() { SaveSettings(_iniFilePath); }
-
         #region Nested type: SectionPair
         private struct SectionPair
         {

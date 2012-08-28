@@ -36,7 +36,6 @@ namespace SFMLStart.Utilities
             Commands.Add(mCommand);
             if (CommandCurrent == null) CommandCurrent = mCommand;
         }
-
         public void RemoveCommand(Command mCommand)
         {
             Debug.Assert(Commands.Count > 0);
@@ -44,7 +43,6 @@ namespace SFMLStart.Utilities
 
             Commands.Remove(mCommand);
         }
-
         public void NextCommand()
         {
             Debug.Assert(CommandCurrent != null);
@@ -60,9 +58,7 @@ namespace SFMLStart.Utilities
 
             CommandCurrent = Commands[mIndex];
         }
-
         public void JumpToCommand(string mLabel) { CommandCurrent = _commandsLabeled[mLabel]; }
-
         public void StepForward()
         {
             do
