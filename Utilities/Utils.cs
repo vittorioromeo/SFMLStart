@@ -45,17 +45,20 @@ namespace SFMLStart.Utilities
             return mSource;
         }
         public static void SafeInvoke(this Action mAction) { if (mAction != null) mAction(); }
+
         #region Timeline Shortcuts
         public static void Wait(this Timeline mTimeline, int mTime = 0) { mTimeline.AddCommand(new Wait(mTime)); }
         public static void Action(this Timeline mTimeline, Action mAction) { mTimeline.AddCommand(new Do(mAction)); }
         public static void Goto(this Timeline mTimeline, int mIndex = 0, int mTimes = -1) { mTimeline.AddCommand(new Goto(mIndex, mTimes)); }
         #endregion
+
         #region Nested type: Assets
         public static class Assets
         {
             public static void SetSoundsVolume(int mVolume) { foreach (var keyValuePair in Data.Assets.Sounds) keyValuePair.Value.Volume = mVolume; }
         }
         #endregion
+
         #region Nested type: Dialogs
         public static class Dialogs
         {
@@ -146,6 +149,7 @@ namespace SFMLStart.Utilities
             }
         }
         #endregion
+
         #region Nested type: Math
         public static class Math
         {
@@ -158,6 +162,7 @@ namespace SFMLStart.Utilities
                 if (value.CompareTo(min) < 0) result = min;
                 return result;
             }
+
             #region Nested type: Angles
             public static class Angles
             {
@@ -201,6 +206,7 @@ namespace SFMLStart.Utilities
                 }
             }
             #endregion
+
             #region Nested type: Distances
             public static class Distances
             {
@@ -211,6 +217,7 @@ namespace SFMLStart.Utilities
                 public static double Euclidean(double mX1, double mY1, double mX2, double mY2) { return System.Math.Sqrt((mX1 - mX2)*(mX1 - mX2) + (mY1 - mY2)*(mY1 - mY2)); }
             }
             #endregion
+
             #region Nested type: Vectors
             public static class Vectors
             {
@@ -259,6 +266,7 @@ namespace SFMLStart.Utilities
             #endregion
         }
         #endregion
+
         #region Nested type: Random
         public static class Random
         {

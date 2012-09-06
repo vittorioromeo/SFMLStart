@@ -16,10 +16,12 @@ namespace SFMLStart.Utilities
         private readonly List<SSVector2I> _points;
 
         public PolygonI(params SSVector2I[] mPoints) { _points = mPoints.ToList(); }
+
         #region IEnumerable<SSVector2I> Members
         public IEnumerator<SSVector2I> GetEnumerator() { return _points.GetEnumerator(); }
         IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
         #endregion
+
         public Vertex[] GetVertexArray(float mMultiplier = 1, Color mColor = default(Color))
         {
             var result = new Vertex[_points.Count];
@@ -42,12 +44,14 @@ namespace SFMLStart.Utilities
             var c = false;
             var p = new SSVector2F(mPoint)/mDivisor;
 
+            var pointsToCheck = _points.Select(x => x / mDivisor).ToList();
+
             for (i = 0, j = _points.Count - 1; i < _points.Count; j = i++)
             {
-                var p1 = new SSVector2F(_points[i])/mDivisor;
-                var p2 = new SSVector2F(_points[j])/mDivisor;
+                var p1 = pointsToCheck[i];
+                var p2 = pointsToCheck[j];
 
-                if (((p1.Y > p.Y) != (p2.Y > p.Y)) && (p.X < (p2.X - p1.X)*(p.Y - p1.Y)/(p2.Y - p1.Y) + p1.X)) c = !c;
+                if (((p1.Y >= p.Y) != (p2.Y >= p.Y)) && (p.X <= (p2.X - p1.X)*(p.Y - p1.Y)/(p2.Y - p1.Y) + p1.X)) c = !c;
             }
 
             return c;

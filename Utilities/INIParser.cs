@@ -134,6 +134,7 @@ namespace SFMLStart.Utilities
         }
 
         public void SaveSettings() { SaveSettings(_iniFilePath); }
+
         #region Nested type: SectionPair
         private struct SectionPair
         {

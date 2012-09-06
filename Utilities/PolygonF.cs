@@ -16,10 +16,12 @@ namespace SFMLStart.Utilities
         private readonly List<SSVector2F> _points;
 
         public PolygonF(params SSVector2F[] mPoints) { _points = mPoints.ToList(); }
+
         #region IEnumerable<SSVector2F> Members
         public IEnumerator<SSVector2F> GetEnumerator() { return _points.GetEnumerator(); }
         IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
         #endregion
+
         public Vertex[] GetVertexArray(float mMultiplier = 1, Color mColor = default(Color))
         {
             var result = new Vertex[_points.Count];
@@ -40,14 +42,16 @@ namespace SFMLStart.Utilities
 
             int i, j;
             var c = false;
-            var p = mPoint/mDivisor;
+            var p = mPoint / mDivisor;
 
-            for (i = 0, j = _points.Count - 1; i < _points.Count; j = i++)
+            var pointsToCheck = _points.Select(x => x/mDivisor).ToList();
+
+            for (i = 0, j = pointsToCheck.Count - 1; i < pointsToCheck.Count; j = i++)
             {
-                var p1 = _points[i]/mDivisor;
-                var p2 = _points[j]/mDivisor;
+                var p1 = pointsToCheck[i];
+                var p2 = pointsToCheck[j];
 
-                if (((p1.Y > p.Y) != (p2.Y > p.Y)) && (p.X < (p2.X - p1.X)*(p.Y - p1.Y)/(p2.Y - p1.Y) + p1.X)) c = !c;
+                if (((p1.Y >= p.Y) != (p2.Y >= p.Y)) && (p.X <= (p2.X - p1.X)*(p.Y - p1.Y)/(p2.Y - p1.Y) + p1.X)) c = !c;
             }
 
             return c;

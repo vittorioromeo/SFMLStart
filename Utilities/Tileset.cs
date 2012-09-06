@@ -31,18 +31,18 @@ namespace SFMLStart.Utilities
         public Sprite GetSprite(int mX, int mY, Texture mTexture)
         {
             return new Sprite(mTexture)
-                       {
-                           TextureRect = GetTextureRect(mX, mY),
-                           Origin = new Vector2f(GetTextureRect(mX, mY).Width/2f, GetTextureRect(mX, mY).Height/2f)
-                       };
+                   {
+                       TextureRect = GetTextureRect(mX, mY),
+                       Origin = new Vector2f(GetTextureRect(mX, mY).Width/2f, GetTextureRect(mX, mY).Height/2f)
+                   };
         }
         public Sprite GetSprite(string mLabel, Texture mTexture)
         {
             return new Sprite(mTexture)
-                       {
-                           TextureRect = GetTextureRect(mLabel),
-                           Origin = new Vector2f(GetTextureRect(mLabel).Width/2f, GetTextureRect(mLabel).Height/2f)
-                       };
+                   {
+                       TextureRect = GetTextureRect(mLabel),
+                       Origin = new Vector2f(GetTextureRect(mLabel).Width/2f, GetTextureRect(mLabel).Height/2f)
+                   };
         }
 
         public IntRect GetTextureRect(int mX, int mY) { return new IntRect(mX*TileWidth + Separation*mX, mY*TileHeight + Separation*mY, TileWidth, TileHeight); }

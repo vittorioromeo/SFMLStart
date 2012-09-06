@@ -37,12 +37,12 @@ namespace SFMLStart
             Debug.Assert(mWidth > 0 && mHeight > 0);
 
             View = new View(new FloatRect(0, 0, mWidth, mHeight))
-                       {
-                           Viewport = new FloatRect(mXOffset/_renderWindow.Size.X,
-                                                    mYOffset/_renderWindow.Size.Y,
-                                                    mWidth/_renderWindow.Size.X,
-                                                    mHeight/_renderWindow.Size.Y)
-                       };
+                   {
+                       Viewport = new FloatRect(mXOffset/_renderWindow.Size.X,
+                                                mYOffset/_renderWindow.Size.Y,
+                                                mWidth/_renderWindow.Size.X,
+                                                mHeight/_renderWindow.Size.Y)
+                   };
         }
 
         public bool IsInView(Vector2f mPosition)

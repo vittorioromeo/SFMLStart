@@ -146,6 +146,7 @@ namespace SFMLStart.Utilities
         /// </summary>
         /// <returns> IENumerator </returns>
         public IEnumerator<T> GetEnumerator() { return new BinaryTreeEnumerator(this); }
+
         #region Nested type: BinaryTreeEnumerator
         /// <summary>
         ///   The BinaryTreeEnumerator implements the IEnumerator allowing foreach enumeration of the tree
@@ -160,6 +161,7 @@ namespace SFMLStart.Utilities
                 _theTree = tree;
                 _current = null;
             }
+
             #region IEnumerator<T> Members
             /// <summary>
             ///   The MoveNext function traverses the tree in sorted order.
@@ -223,6 +225,7 @@ namespace SFMLStart.Utilities
             #endregion
         }
         #endregion
+
         #region Nested type: BinaryTreeNode
         /// <summary>
         ///   The tree is build up out of BinaryTreeNode instances

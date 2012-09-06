@@ -40,6 +40,7 @@ namespace SFMLStart.Vectors
             }
         }
         public override string ToString() { return string.Format("X:{0} Y:{1}", _x, _y); }
+
         #region Utilities
         public double GetDotProduct(SSVector2I mVector) { return X*mVector.X + Y*mVector.Y; }
         public double GetLength() { return Math.Sqrt(X*X + Y*Y); }
@@ -52,6 +53,7 @@ namespace SFMLStart.Vectors
         public float ToAngleDegrees() { return Utils.Math.Angles.ToDegrees(ToAngleRadians()); }
         public float ToAngleRadians() { return (float) Math.Atan2(Y, X); }
         #endregion
+
         #region Operator Overloads
         public static SSVector2I operator +(SSVector2I mVector1, SSVector2I mVector2) { return new SSVector2I(mVector1.X + mVector2.X, mVector1.Y + mVector2.Y); }
         public static SSVector2I operator -(SSVector2I mVector1, SSVector2I mVector2) { return new SSVector2I(mVector1.X - mVector2.X, mVector1.Y - mVector2.Y); }
