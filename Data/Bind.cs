@@ -21,11 +21,11 @@ namespace SFMLStart.Data
 
         public Game Game { get; set; }
         public string Name { get; set; }
-        public KeyCombination KeyCombination { get; set; }
-        public float GlobalDelay { get; set; }
         public float MaxDelay { get; set; }
         public float CurrentDelay { get; set; }
+        public KeyCombination KeyCombination { get; set; }
         public Action ActionTrue { get; set; }
         public Action ActionFalse { get; set; }
+        public float GlobalDelay { get; set; }
     }
 }

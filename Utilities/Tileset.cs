@@ -48,9 +48,17 @@ namespace SFMLStart.Utilities
         public IntRect GetTextureRect(int mX, int mY) { return new IntRect(mX*TileWidth + Separation*mX, mY*TileHeight + Separation*mY, TileWidth, TileHeight); }
         public IntRect GetTextureRect(string mLabel)
         {
-            var mX = Labels[mLabel].X;
-            var mY = Labels[mLabel].Y;
-            return new IntRect(mX*TileWidth + Separation*mX, mY*TileHeight + Separation*mY, TileWidth, TileHeight);
+#if CHECK_ASSETS
+            if(mLabel == null || !Labels.ContainsKey(mLabel))
+            {
+                Utils.Log(string.Format("Tileset: missing label {0}", mLabel), "Asset error");
+                return new IntRect(0,0,16,16);
+            }
+            #endif
+
+            var x = Labels[mLabel].X;
+            var y = Labels[mLabel].Y;
+            return new IntRect(x*TileWidth + Separation*x, y*TileHeight + Separation*y, TileWidth, TileHeight);
         }
 
         public void SetLabel(string mLabel, int mIndexX, int mIndexY) { Labels.Add(mLabel, new SSVector2I(mIndexX, mIndexY)); }

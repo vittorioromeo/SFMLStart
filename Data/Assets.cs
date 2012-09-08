@@ -16,23 +16,22 @@ namespace SFMLStart.Data
         private static Dictionary<string, Image> _images;
         private static Dictionary<string, Texture> _textures;
         private static Dictionary<string, Animation> _animations;
+        private static Dictionary<string, Tileset> _tilesets;
+        private static Dictionary<string, Music> _music;
 
         static Assets() { Initialize(); }
 
-        public static Dictionary<string, Tileset> Tilesets { get; private set; }
-        public static Dictionary<string, Sound> Sounds { get; private set; }
-        public static Dictionary<string, Music> Music { get; private set; }
+        internal static Dictionary<string, Sound> Sounds { get; private set; }
 
-        private static string GetAssetName(FileSystemInfo mFileInfo) { return mFileInfo.Name.Replace(mFileInfo.Extension, ""); }
-
+        #region Initialization Methods
         private static void Initialize()
         {
             _images = new Dictionary<string, Image>();
             _textures = new Dictionary<string, Texture>();
-            Tilesets = new Dictionary<string, Tileset>();
+            _tilesets = new Dictionary<string, Tileset>();
             _animations = new Dictionary<string, Animation>();
             Sounds = new Dictionary<string, Sound>();
-            Music = new Dictionary<string, Music>();
+            _music = new Dictionary<string, Music>();
             if (Settings.Assets.LoadImages) InitializeImages();
             if (Settings.Assets.LoadTextures) InitializeTextures();
             if (Settings.Assets.LoadTilesets) InitializeTilesets();
@@ -42,7 +41,7 @@ namespace SFMLStart.Data
         }
         private static void InitializeImages()
         {
-            _images.Add("missingimage", new Image(45, 45, Color.Magenta));
+            _images.Add("missingimage", new Image(16, 16, Color.Magenta));
 
             var imageDirectory = new DirectoryInfo(Settings.Paths.Images);
             if (!imageDirectory.Exists)
@@ -162,12 +161,14 @@ namespace SFMLStart.Data
                     var directoryName = directoryInfo.FullName.Replace(musicDirectory.FullName, @"");
                     if (!directoryInfo.FullName.EndsWith("\\"))
                         directoryName = directoryName.Insert(directoryName.Length, "\\");
-                    Music.Add(directoryName + GetAssetName(fileInfo), new Music(fileInfo.FullName));
+                    _music.Add(directoryName + GetAssetName(fileInfo), new Music(fileInfo.FullName));
                     Utils.Log(string.Format("sound <<{0}>> loaded", directoryName + GetAssetName(fileInfo)),
                               "InitializeMusic", ConsoleColor.Red);
                 }
         }
+        #endregion
 
+        #region Utility Methods
         private static void LoadTileset(FileInfo mFileInfo)
         {
             var streamReader = File.OpenText(mFileInfo.FullName);
@@ -179,7 +180,7 @@ namespace SFMLStart.Data
             var tileHeight = Int32.Parse(separationByItems[1]);
             var tileSeparation = Int32.Parse(separationByGroups[1]);
 
-            Tilesets.Add(GetAssetName(mFileInfo), new Tileset(tileWidth, tileHeight, tileSeparation));
+            _tilesets.Add(GetAssetName(mFileInfo), new Tileset(tileWidth, tileHeight, tileSeparation));
             Utils.Log(string.Format("tileset <<{0}>> loaded", GetAssetName(mFileInfo)), "InitializeTilesets",
                       ConsoleColor.Magenta);
 
@@ -188,7 +189,7 @@ namespace SFMLStart.Data
                 {
                     var label = separationByGroups[iY].Split(',')[iX];
                     if (String.IsNullOrEmpty(label)) continue;
-                    Tilesets[GetAssetName(mFileInfo)].SetLabel(label, iX, iY - 2);
+                    _tilesets[GetAssetName(mFileInfo)].SetLabel(label, iX, iY - 2);
                 }
         }
         private static void LoadAnimation(FileInfo mFileInfo)
@@ -208,8 +209,70 @@ namespace SFMLStart.Data
             Utils.Log(string.Format("animation <<{0}>> created", GetAssetName(mFileInfo)), "InitializeAnimations",
                       ConsoleColor.Yellow);
         }
+        private static string GetAssetName(FileSystemInfo mFileInfo) { return mFileInfo.Name.Replace(mFileInfo.Extension, ""); }
+        #endregion
 
-        public static Texture GetTexture(string mTextureName) { return _textures.ContainsKey(mTextureName) ? _textures[mTextureName] : _textures["missingimage"]; }
-        public static Animation GetAnimation(string mAnimationName) { return _animations[mAnimationName].Clone(); }
+        #region Getters
+        public static Texture GetTexture(string mTextureName)
+        {
+#if CHECK_ASSETS
+            if (!_textures.ContainsKey(mTextureName))
+            {
+                Utils.Log(string.Format("Load: missing texture {0}", mTextureName), "Asset error");
+                return _textures["missingimage"];
+            }
+#endif
+
+            return _textures[mTextureName];
+        }
+        public static Animation GetAnimation(string mAnimationName)
+        {
+#if CHECK_ASSETS
+            if(!_animations.ContainsKey(mAnimationName))
+            {
+                Utils.Log(string.Format("Load: missing animation {0}", mAnimationName), "Asset error");
+                return new Animation();
+            }
+#endif
+
+            return _animations[mAnimationName].Clone();
+        }
+        public static Tileset GetTileset(string mTilesetName)
+        {
+#if CHECK_ASSETS
+            if(!_tilesets.ContainsKey(mTilesetName))
+            {
+                Utils.Log(string.Format("Load: missing tileset {0}", mTilesetName), "Asset error");
+                return new Tileset(16,16,0);
+            }
+#endif
+
+            return _tilesets[mTilesetName];
+        }
+        public static Sound GetSound(string mSoundName)
+        {
+#if CHECK_ASSETS
+            if(!Sounds.ContainsKey(mSoundName))
+            {
+                Utils.Log(string.Format("Load: missing sound {0}", mSoundName), "Asset error");
+                return new Sound();
+            }
+#endif
+
+            return Sounds[mSoundName];
+        }
+        public static Music GetMusic(string mMusicName)
+        {
+#if CHECK_ASSETS
+            if(!_music.ContainsKey(mMusicName))
+            {
+                Utils.Log(string.Format("Load: missing music {0}", mMusicName), "Asset error");
+                Utils.Log(string.Format("Load: missing music {0} - fatal error", mMusicName), "Asset error");
+            }
+#endif
+
+            return _music[mMusicName];
+        }
+        #endregion
     }
 }

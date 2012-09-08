@@ -71,8 +71,7 @@
     <Compile Include="Data\Assets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Data\Settings.cs" />
-    <Compile Include="Utilities\PolygonF.cs" />
-    <Compile Include="Utilities\PolygonI.cs" />
+    <Compile Include="Utilities\Polygons.cs" />
     <Compile Include="Utilities\Timelines\Do.cs" />
     <Compile Include="Utilities\Timelines\Goto.cs" />
     <Compile Include="Utilities\Timelines\GotoConditional.cs" />

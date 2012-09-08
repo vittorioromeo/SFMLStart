@@ -3,10 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
+using SFML.Graphics;
+using SFML.Window;
 using SFMLStart.Data;
 using SFMLStart.Utilities.Timelines;
 using SFMLStart.Vectors;
+using Color = SFML.Graphics.Color;
 
 #endregion
 
@@ -36,15 +40,20 @@ namespace SFMLStart.Utilities
 
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> mSource, Action<T> mAction)
         {
-            if (mAction == null)
-                throw new ArgumentNullException("mAction");
-
-            foreach (var item in mSource)
-                mAction(item);
-
+            if (mAction == null) throw new ArgumentNullException("mAction");
+            foreach (var item in mSource) mAction(item);
             return mSource;
         }
         public static void SafeInvoke(this Action mAction) { if (mAction != null) mAction(); }
+        public static Vertex[] GetVertexArray(List<SSVector2F> mPoints, float mMultiplier = 1, Color mColor = default(Color))
+        {
+            var result = new Vertex[mPoints.Count];
+
+            for (var i = 0; i < mPoints.Count; i++)
+                result[i] = new Vertex(new Vector2f(mPoints[i].X*mMultiplier, mPoints[i].Y*mMultiplier)) {Color = mColor};
+
+            return result;
+        }
 
         #region Timeline Shortcuts
         public static void Wait(this Timeline mTimeline, int mTime = 0) { mTimeline.AddCommand(new Wait(mTime)); }
@@ -203,6 +212,60 @@ namespace SFMLStart.Utilities
                     var desiredAngle = (float) System.Math.Atan2(y, x);
                     var difference = WrapRadians(desiredAngle - mStartRadians);
                     return WrapRadians(mStartRadians + difference);
+                }
+            }
+            #endregion
+
+            #region Nested type: Collision
+            public static class Collision
+            {
+                private static double Angle2D(double mX1, double mY1, double mX2, double mY2)
+                {
+                    var theta1 = System.Math.Atan2(mY1, mX1);
+                    var theta2 = System.Math.Atan2(mY2, mX2);
+                    var dtheta = theta2 - theta1;
+                    while (dtheta > System.Math.PI) dtheta -= System.Math.PI*2;
+                    while (dtheta < -System.Math.PI) dtheta += System.Math.PI*2;
+
+                    return (dtheta);
+                }
+
+                public static bool IsPointInPolygon(IEnumerable<SSVector2F> mPolygonPoints, SSVector2F mPoint, float mDivisor = 1)
+                {
+                    // This is PNPOLY by W. Randolph Franklin
+                    // http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html
+
+                    int i, j;
+                    var c = false;
+                    var p = mPoint/mDivisor;
+
+                    var pointsToCheck = mPolygonPoints.Select(x => x/mDivisor).ToList();
+
+                    for (i = 0, j = pointsToCheck.Count - 1; i < pointsToCheck.Count; j = i++)
+                    {
+                        var p1 = pointsToCheck[i];
+                        var p2 = pointsToCheck[j];
+
+                        if (((p1.Y >= p.Y) != (p2.Y >= p.Y)) && (p.X <= (p2.X - p1.X)*(p.Y - p1.Y)/(p2.Y - p1.Y) + p1.X)) c = !c;
+                    }
+
+                    return c;
+                }
+
+                public static bool IsPointInPolygon2(List<SSVector2F> mPolygonPoints, SSVector2F mPoint)
+                {
+                    int i;
+                    double angle = 0;
+
+                    for (i = 0; i < mPolygonPoints.Count; i++)
+                    {
+                        var p1 = new SSVector2F(mPolygonPoints[i].X - mPoint.X, mPolygonPoints[i].Y - mPoint.Y);
+                        var p2 = new SSVector2F(mPolygonPoints[(i + 1)%mPolygonPoints.Count].X - mPoint.X,
+                                                mPolygonPoints[(i + 1)%mPolygonPoints.Count].Y - mPoint.Y);
+                        angle += Angle2D(p1.X, p1.Y, p2.X, p2.Y);
+                    }
+
+                    return !(System.Math.Abs(angle) < System.Math.PI);
                 }
             }
             #endregion
