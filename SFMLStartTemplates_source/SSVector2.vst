@@ -1,0 +1,90 @@
+<VeeSharpTemplate>
+  <Prefix>vte_</Prefix>
+  <TemplateName>SSVector2</TemplateName>
+  <Code>var initials = new []{"I", "F"};
+var types = new []{"int", "float"};
+var vectorTypes = new []{"SSVector2I", "SSVector2F"};
+var alternates = new []{"SSVector2F", "SSVector2I"};
+
+$$ "#region"
+$$ "using System;"
+$$ "using SFMLStart.Utilities;"
+$$ "#endregion"
+$$
+$$ "namespace SFMLStart.Vectors"
+$$ "{"
+
+for(var i = 0; i &lt; types.GetLength(0); i++)
+{
+	var initial = initials[i];
+	var type = types[i];
+	var vectorType = vectorTypes[i];
+	var alternate = alternates[i];
+
+$$	"public struct SSVector2" + initial
+$$	"{"
+$$		"private " + type + " _x;"
+$$		"private " + type + " _y;"
+$$
+$$		"public SSVector2" + initial + "(float mX, float mY)"
+$$		"{"
+$$    		"_x = mX;"
+$$    		"_y = mY;"
+$$		"}"
+$$		"public SSVector2" + initial + "(" + alternate + " mVector)"
+$$		"{"
+$$    		"_x = (" + type + ") mVector.X;"
+$$    		"_y = (" + type + ") mVector.Y;"
+$$		"}"
+$$
+$$		"public " + type + " X { get { return _x; } set { _x = value; } }"
+$$		"public " + type + " Y { get { return _y; } set { _y = value; } }"
+$$
+$$		"public bool Equals(SSVector2" + initial + " mVector) { return _x == mVector._x &amp;&amp; _y == mVector._y; }"
+$$		"public override bool Equals(object obj)"
+$$		"{"
+$$    		"if (ReferenceEquals(null, obj)) return false;"
+$$    		"return obj is SSVector2" + initial + " &amp;&amp; Equals((SSVector2" + initial + ") obj);"
+$$		"}"
+$$
+$$		"public override int GetHashCode()"
+$$		"{"
+$$    		"unchecked"
+$$    		"{"
+$$        		"return (int) (_x*397) ^ (int) _y;"
+$$    		"}"
+$$		"}"
+$$		"public override string ToString() { return string.Format(\"X:{0} Y:{1}\", _x, _y); }"
+$$
+$$		"#region Utilities"
+$$		"public double GetDotProduct(SSVector2" + initial + " mVector) { return X*mVector.X + Y*mVector.Y; }"
+$$		"public double GetLength() { return Math.Sqrt(X*X + Y*Y); }"
+$$		"public double GetAngleBetween(SSVector2" + initial + " mVector)"
+$$		"{"
+$$    		"var cos = GetDotProduct(mVector)/(GetLength()*mVector.GetLength());"
+$$    		"return Utils.Math.Angles.ToDegrees((float) Math.Acos(cos));"
+$$		"}"
+$$		"public SSVector2" + initial + " GetNormalized() { return new SSVector2" + initial + "((float) (X/GetLength()), (float) (Y/GetLength())); }"
+$$		"public float ToAngleDegrees() { return Utils.Math.Angles.ToDegrees(ToAngleRadians()); }"
+$$		"public float ToAngleRadians() { return (float) Math.Atan2(Y, X); }"
+$$		"#endregion"
+$$
+$$		"#region Operator Overloads"
+$$		"public static SSVector2" + initial + " operator +(SSVector2" + initial + " mVector1, SSVector2" + initial +" mVector2) { return new SSVector2F(mVector1.X + mVector2.X, mVector1.Y + mVector2.Y); }"
+$$		"public static SSVector2" + initial + " operator -(SSVector2" + initial + " mVector1, SSVector2" + initial +" mVector2) { return new SSVector2F(mVector1.X - mVector2.X, mVector1.Y - mVector2.Y); }"
+$$		"public static SSVector2" + initial + " operator *(SSVector2" + initial + " mVector, int mScalar) { return new SSVector2" + initial + "(mVector.X*mScalar, mVector.Y*mScalar); }"
+$$		"public static SSVector2" + initial + " operator *(SSVector2" + initial + " mVector, float mScalar) { return new SSVector2" + initial + "(mVector.X*mScalar, mVector.Y*mScalar); }"
+$$		"public static SSVector2" + initial + " operator /(SSVector2" + initial + " mVector, int mScalar) { return new SSVector2" + initial + "(mVector.X/mScalar, mVector.Y/mScalar); }"
+$$		"public static SSVector2" + initial + " operator /(SSVector2" + initial + " mVector, float mScalar) { return new SSVector2" + initial + "(mVector.X/mScalar, mVector.Y/mScalar); }"
+$$		"public static bool operator ==(SSVector2" + initial +" mVector1, SSVector2" + initial +" mVector2) { return mVector1.X == mVector2.X &amp;&amp; mVector1.Y == mVector2.Y; }"
+$$		"public static bool operator !=(SSVector2" + initial +" mVector1, SSVector2" + initial +" mVector2) { return mVector1.X != mVector2.X || mVector1.Y != mVector2.Y; }"
+$$		"public static explicit operator " + alternate + "(SSVector2" + initial +" mVector) { return new " + alternate + "(mVector); }"
+$$		"#endregion"
+$$
+$$	"}"
+
+}
+
+$$ "}"</Code>
+  <Folder>Vectors\</Folder>
+</VeeSharpTemplate>

@@ -29,7 +29,7 @@ namespace SFMLStart.Vectors
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
-            return obj is SSVector2I && Equals((SSVector2I) obj);
+            return obj is SSVector2F && Equals((SSVector2F) obj);
         }
 
         public override int GetHashCode()

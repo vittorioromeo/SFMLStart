@@ -21,6 +21,7 @@ namespace SFMLStart
         public Action OnDrawAfterDefault { get; set; }
         public float GlobalInputDelay { get; set; }
 
+        public void Bind(string mBindName, Action mActionTrue, KeyCombination mKeyCombination, Action mActionFalse = null, int mBindDelay = 0) { Input.Bind(this, mBindName, mBindDelay, mActionTrue, mActionFalse, mKeyCombination); }
         public void Bind(string mBindName, int mBindDelay, Action mActionTrue, Action mActionFalse, KeyCombination mKeyCombination) { Input.Bind(this, mBindName, mBindDelay, mActionTrue, mActionFalse, mKeyCombination); }
 
         public void AddDrawAction(Action mAction, int mPriority = 0) { _drawActions.Add(new DrawAction(mAction, mPriority)); }
