@@ -38,24 +38,24 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="sfmlnet-audio-2, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Release\sfmlnet-audio-2.dll</HintPath>
-    </Reference>
-    <Reference Include="sfmlnet-graphics-2, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Release\sfmlnet-graphics-2.dll</HintPath>
-    </Reference>
-    <Reference Include="sfmlnet-window-2, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Release\sfmlnet-window-2.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="sfmlnet-audio-2">
+      <HintPath>..\TimeDRODPOF\packages\Graphnode.SFML.Net.2.3.1\lib\sfmlnet-audio-2.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-graphics-2">
+      <HintPath>..\TimeDRODPOF\packages\Graphnode.SFML.Net.2.3.1\lib\sfmlnet-graphics-2.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-system-2">
+      <HintPath>..\TimeDRODPOF\packages\Graphnode.SFML.Net.2.3.1\lib\sfmlnet-system-2.dll</HintPath>
+    </Reference>
+    <Reference Include="sfmlnet-window-2">
+      <HintPath>..\TimeDRODPOF\packages\Graphnode.SFML.Net.2.3.1\lib\sfmlnet-window-2.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Bind.cs" />
@@ -86,6 +86,9 @@
     <Compile Include="Vectors\SSVector2I.cs" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -94,4 +97,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Import Project="..\TimeDRODPOF\packages\Graphnode.SFML.Net.2.3.1\build\Graphnode.SFML.Net.targets" Condition="Exists('..\TimeDRODPOF\packages\Graphnode.SFML.Net.2.3.1\build\Graphnode.SFML.Net.targets')" />
 </Project>

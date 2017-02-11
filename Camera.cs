@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using SFML.Graphics;
 using SFML.Window;
-
+using SFML.System;
 #endregion
 
 namespace SFMLStart
@@ -26,11 +26,11 @@ namespace SFMLStart
             get
             {
                 var mousePosition = Mouse.GetPosition(_renderWindow);
-                return _renderWindow.ConvertCoords(new Vector2i(mousePosition.X, mousePosition.Y), View);
+				return _renderWindow.MapPixelToCoords(new Vector2i(mousePosition.X, mousePosition.Y), View);
             }
         }
 
-        public Vector2f ConvertCoords(float mX, float mY) { return _renderWindow.ConvertCoords(new Vector2i((int) mX, (int) mY), View); }
+        public Vector2f ConvertCoords(float mX, float mY) { return _renderWindow.MapPixelToCoords(new Vector2i((int) mX, (int) mY), View); }
 
         public void Resize(float mXOffset, float mYOffset, float mWidth, float mHeight)
         {

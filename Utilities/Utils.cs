@@ -11,7 +11,7 @@ using SFMLStart.Data;
 using SFMLStart.Utilities.Timelines;
 using SFMLStart.Vectors;
 using Color = SFML.Graphics.Color;
-
+using SFML.System;
 #endregion
 
 namespace SFMLStart.Utilities

@@ -6,7 +6,7 @@ using SFML.Graphics;
 using SFML.Window;
 using SFMLStart.Data;
 using SFMLStart.Utilities;
-
+using SFML.System;
 #endregion
 
 namespace SFMLStart
@@ -62,9 +62,10 @@ namespace SFMLStart
             {
                 RenderWindow.SetActive();
 
-                _frameTime = Settings.Frametime.IsStatic
-                                 ? Settings.Frametime.StaticValue
-                                 : (float) _stopwatch.Elapsed*60f;
+				_frameTime = Settings.Frametime.IsStatic
+								 ? Settings.Frametime.StaticValue
+								 : (float)_stopwatch.Elapsed / 100.0f;
+				
                 FPS = 60/_frameTime;
 
                 _stopwatch.Start();

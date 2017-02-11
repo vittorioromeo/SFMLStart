@@ -51,7 +51,7 @@ namespace SFMLStart.Data
             }
 
             var imagesDirectories = new List<DirectoryInfo> {imageDirectory};
-            imagesDirectories.AddRange(imageDirectory.GetDirectories("*.", SearchOption.AllDirectories));
+            imagesDirectories.AddRange(imageDirectory.GetDirectories("*", SearchOption.AllDirectories));
 
             foreach (var directoryInfo in imagesDirectories)
             {
@@ -59,8 +59,8 @@ namespace SFMLStart.Data
                 {
                     if (!Settings.Assets.ImagesExtensions.Contains(fileInfo.Extension.ToLower())) continue;
                     var directoryName = directoryInfo.FullName.Replace(imageDirectory.FullName, @"");
-                    if (!directoryInfo.FullName.EndsWith("\\"))
-                        directoryName = directoryName.Insert(directoryName.Length, "\\");
+                    if (!directoryInfo.FullName.EndsWith("/"))
+                        directoryName = directoryName.Insert(directoryName.Length, "/");
                     _images.Add(directoryName + GetAssetName(fileInfo), new Image(fileInfo.FullName));
                     Utils.Log(string.Format("image <<{0}>> loaded", directoryName + GetAssetName(fileInfo)),
                               "InitializeImages");
@@ -133,8 +133,8 @@ namespace SFMLStart.Data
                 {
                     if (!Settings.Assets.SoundsExtensions.Contains(fileInfo.Extension.ToLower())) continue;
                     var directoryName = directoryInfo.FullName.Replace(soundsDirectory.FullName, @"");
-                    if (!directoryInfo.FullName.EndsWith("\\"))
-                        directoryName = directoryName.Insert(directoryName.Length, "\\");
+                    if (!directoryInfo.FullName.EndsWith("/"))
+                        directoryName = directoryName.Insert(directoryName.Length, "/");
                     var soundBuffer = new SoundBuffer(fileInfo.FullName);
                     Sounds.Add(directoryName + GetAssetName(fileInfo), new Sound(soundBuffer));
                     Utils.Log(string.Format("sound <<{0}>> loaded", directoryName + GetAssetName(fileInfo)),
@@ -159,8 +159,8 @@ namespace SFMLStart.Data
                 {
                     if (!Settings.Assets.MusicExtensions.Contains(fileInfo.Extension.ToLower())) continue;
                     var directoryName = directoryInfo.FullName.Replace(musicDirectory.FullName, @"");
-                    if (!directoryInfo.FullName.EndsWith("\\"))
-                        directoryName = directoryName.Insert(directoryName.Length, "\\");
+                    if (!directoryInfo.FullName.EndsWith("/"))
+                        directoryName = directoryName.Insert(directoryName.Length, "/");
                     _music.Add(directoryName + GetAssetName(fileInfo), new Music(fileInfo.FullName));
                     Utils.Log(string.Format("sound <<{0}>> loaded", directoryName + GetAssetName(fileInfo)),
                               "InitializeMusic", ConsoleColor.Red);
@@ -223,7 +223,8 @@ namespace SFMLStart.Data
             }
 #endif
 
-            return _textures[mTextureName];
+
+            return _textures[mTextureName.Replace('\\', '/')];
         }
         public static Animation GetAnimation(string mAnimationName)
         {
@@ -235,7 +236,7 @@ namespace SFMLStart.Data
             }
 #endif
 
-            return _animations[mAnimationName].Clone();
+            return _animations[mAnimationName.Replace('\\', '/')].Clone();
         }
         public static Tileset GetTileset(string mTilesetName)
         {
@@ -247,7 +248,7 @@ namespace SFMLStart.Data
             }
 #endif
 
-            return _tilesets[mTilesetName];
+            return _tilesets[mTilesetName.Replace('\\', '/')];
         }
         public static Sound GetSound(string mSoundName)
         {
@@ -259,7 +260,7 @@ namespace SFMLStart.Data
             }
 #endif
 
-            return Sounds[mSoundName];
+            return Sounds[mSoundName.Replace('\\', '/')];
         }
         public static Music GetMusic(string mMusicName)
         {
@@ -271,7 +272,7 @@ namespace SFMLStart.Data
             }
 #endif
 
-            return _music[mMusicName];
+            return _music[mMusicName.Replace('\\', '/')];
         }
         #endregion
     }
